@@ -3,7 +3,7 @@ function abbreviateString(str) {
     throw Error(`Expected string, got ${typeof str}`);
   }
 
-  if (str.length < 1) {
+  if (str.trim().length < 1) {
     throw Error('Got empty string.');
   }
 
@@ -16,6 +16,5 @@ function abbreviateString(str) {
   const lastWord = stringArray[stringArray.length - 1];
   return `${firstWord} ${lastWord[0].toUpperCase()}.`;
 }
-
 
 export { abbreviateString };
