@@ -29,7 +29,4 @@ const animalSort = animals => {
   });
 };
 
-const result = [];
-console.log(animalSort(result));
-
-// export { animalSort };
+export { animalSort };
