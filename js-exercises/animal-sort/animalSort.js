@@ -3,8 +3,16 @@ const animalSort = animals => {
     throw Error(`Expected Array as an input, got ${typeof animals}`);
   }
 
-  if (animals.length === 0) {
-    return [];
+  if (animals.length < 1) {
+    throw Error('Argument passed is empty.');
+  }
+
+  const requiredKeys = ['numberOfLegs', 'name'];
+
+  for (const animal of animals) {
+    if (!(requiredKeys.every(key => Object.keys(animal).includes(key)))) {
+      throw Error('Expected keys : "numberOfLegs" and "name" not found.');
+    }
   }
 
   return animals.sort((animalA, animalB) => {
@@ -21,4 +29,7 @@ const animalSort = animals => {
   });
 };
 
-export { animalSort };
+const result = [];
+console.log(animalSort(result));
+
+// export { animalSort };
