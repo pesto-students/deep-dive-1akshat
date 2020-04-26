@@ -1,17 +1,19 @@
-function abbreviateString(str) {
-  if (typeof (str) !== 'string') {
-    throw Error(`Expected string, got ${typeof str}`);
+function abbreviateString(word) {
+  const trimWord = word.trim();
+
+  if (typeof trimWord !== 'string') {
+    throw Error(`Expected string, got ${typeof trimWord}`);
   }
 
-  if (str.trim().length < 1) {
+  if (trimWord.length < 1) {
     throw Error('Got empty string.');
   }
 
-  if (str.split(' ').length === 1) {
-    return str[0].toUpperCase() + str.substring(1);
+  if (trimWord.split(' ').length === 1) {
+    return trimWord[0].toUpperCase() + trimWord.substring(1);
   }
 
-  const stringArray = str.split(' ');
+  const stringArray = trimWord.split(' ');
   const firstWord = stringArray[0];
   const lastWord = stringArray[stringArray.length - 1];
   return `${firstWord} ${lastWord[0].toUpperCase()}.`;

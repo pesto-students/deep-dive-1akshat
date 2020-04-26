@@ -5,6 +5,7 @@ describe('abbreviateString', () => {
     expect(abbreviateString('Hacktober Fest')).toEqual('Hacktober F.');
     expect(abbreviateString('Leeroy Fitzgerald Jenkins')).toEqual('Leeroy J.');
     expect(abbreviateString('Some arbitrary string length here.')).toEqual('Some H.');
+    expect(abbreviateString('Akshat')).toEqual('Akshat');
   });
 
   it('throws error on invalid parameters', () => {
@@ -12,5 +13,6 @@ describe('abbreviateString', () => {
     expect(() => abbreviateString([])).toThrow();
     expect(() => abbreviateString({})).toThrow();
     expect(() => abbreviateString(null)).toThrow();
+    expect(() => abbreviateString(' ')).toThrow();
   });
 });
