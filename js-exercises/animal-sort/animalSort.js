@@ -1,3 +1,5 @@
+const isObject = (argument) => argument !== null && typeof argument === 'object';
+
 const animalSort = animals => {
   if (!(animals instanceof Array)) {
     throw Error(`Expected Array as an input, got ${typeof animals}`);
@@ -5,10 +7,11 @@ const animalSort = animals => {
 
   const requiredKeys = ['numberOfLegs', 'name'];
 
-  for (const animal of animals) {
-    if (!(requiredKeys.every(key => Object.keys(animal).includes(key)))) {
-      throw Error('Expected keys : "numberOfLegs" and "name" not found.');
-    }
+  const requiredKeysPresent = animals.every(animal => isObject(animal)
+    && requiredKeys.every(key => animal[key] !== undefined));
+
+  if (!requiredKeysPresent) {
+    throw Error('Expected keys : "numberOfLegs" and "name" not found.');
   }
 
   return animals.sort((animalA, animalB) => {
