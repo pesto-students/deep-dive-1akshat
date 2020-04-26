@@ -3,10 +3,6 @@ const animalSort = animals => {
     throw Error(`Expected Array as an input, got ${typeof animals}`);
   }
 
-  if (animals.length < 1) {
-    throw Error('Argument passed is empty.');
-  }
-
   const requiredKeys = ['numberOfLegs', 'name'];
 
   for (const animal of animals) {
@@ -15,12 +11,16 @@ const animalSort = animals => {
     }
   }
 
+  if (animals.length < 1) {
+    return [];
+  }
+
   return animals.sort((animalA, animalB) => {
-    if (animalA.numberOfLegs > animalB.numberOfLegs) {
-      return 1;
-    }
     if (animalA.numberOfLegs === animalB.numberOfLegs) {
       return animalA.name.localeCompare(animalB.name);
+    }
+    if (animalA.numberOfLegs > animalB.numberOfLegs) {
+      return 1;
     }
     if (animalA.numberOfLegs < animalB.numberOfLegs) {
       return -1;
