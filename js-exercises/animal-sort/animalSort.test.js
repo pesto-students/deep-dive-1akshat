@@ -2,6 +2,12 @@ import { animalSort } from './animalSort';
 
 describe('animalSort', () => {
   it('should return empty array if empty array is passed in', () => {
+    expect(() => animalSort([{}])).toThrowError(/[A-Za-z0-9]+/g);
+    expect(() => animalSort([{ name: '', legs: '' }])).toThrowError(/[A-Za-z0-9]+/g);
+    expect(() => animalSort({})).toThrowError(/[A-Za-z0-9]+/g);
+  });
+
+  it('should return empty array if empty array is passed in', () => {
     expect(animalSort([])).toEqual([]);
   });
 
