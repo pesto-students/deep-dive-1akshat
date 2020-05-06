@@ -42,7 +42,7 @@ field_1,field_2,field_3¬
 aaa,bbb,ccc¬
 xxx,yyy,zzz¬
 
-# OUTPUT (ignorting headers)
+# OUTPUT (ignoring headers)
 [ ["field_1", "field_2", "field_3"],
   ["aaa", "bbb", "ccc"],
   ["xxx", "yyy", "zzz"] ]
