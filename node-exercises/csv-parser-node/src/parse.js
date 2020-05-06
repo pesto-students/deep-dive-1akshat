@@ -3,7 +3,7 @@ const fs = require('fs');
 const FILE_PATH = './files/file.csv';
 const results = [];
 let finalObj = [];
-const DELIMETTERS = [',', ':', ' '];
+const DELIMETERS = [',', ':', ' ', '   ', '|', '^', '*', '#', '@', '!', '.', '<', '>', '{', '}', '\t'];
 
 
 // Main Function
@@ -11,6 +11,10 @@ const csvParse = (file) => {
     let readerStream = fs.createReadStream(FILE_PATH);
 
     readerStream.setEncoding('utf8');
+
+    readerStream.on('readable', () => {
+        console.log()
+    })
 
     readerStream.on('data', (chunk) => {
         results.push(chunk)
