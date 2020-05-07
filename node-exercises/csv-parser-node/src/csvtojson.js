@@ -14,13 +14,13 @@ const csvtojson = (srcFilePath, destinationFilePath) => {
       const JSONArr = [];
       for (let item of data) {
         const JSONobject = {};
-        const splittedItem = item.split(",");
+        const splittedItem = item.split(/,(?! )/);
         for (let [id, key] of header.entries()) {
           JSONobject[key] = splittedItem[id];
         }
         JSONArr.push(JSONobject);
       }
-      cb(null, JSON.stringify(JSONArr));
+      cb(null, (JSON.stringify(JSONArr)));
     },
   });
 
