@@ -2,7 +2,7 @@ const fs = require('fs');
 const csvtojson = require('./csvtojson');
 const jsontocsv = require('./jsontocsv');
 
-const FILE_PATH = './files/file.csv';
+const FILE_PATH = __dirname+'/files/file.csv';
 const results = [];
 let finalObj = [];
 const DELIMETERS = require('./consts');
@@ -31,11 +31,11 @@ const csvParse = (srcFilePath, destinationFilePath) => {
     // })
     
     if(srcFilePath.includes('.csv')) {
-        csvtojson(srcFilePath, destinationFilePath);
+        csvtojson(srcFilePath, destinationFilePath, {headers: true, transformHeader: (header) => header.map( column => column.toUpperCase() )});
     } else {
         jsontocsv(srcFilePath, destinationFilePath)
     }
 }
 
-csvParse(FILE_PATH, "./files/file.json");
+csvParse(FILE_PATH, __dirname+"/files/file.json");
 //csvParse("./files/file.json", "./files/newFile.csv");
