@@ -31,7 +31,7 @@ const csvParse = (srcFilePath, destinationFilePath) => {
     // })
     
     if(srcFilePath.includes('.csv')) {
-        csvtojson(srcFilePath, destinationFilePath, {headers: true, transformHeader: (header) => header.map( column => column.toUpperCase() )});
+        csvtojson(srcFilePath, destinationFilePath, {headers: true, transformHeader: (header) => header.map( column => column.toUpperCase() ), isSkipErrors: true});
     } else {
         jsontocsv(srcFilePath, destinationFilePath)
     }
