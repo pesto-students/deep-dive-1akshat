@@ -1,7 +1,8 @@
 const fs = require("fs");
 const { Transform } = require("stream");
 const DELIMETERS = require("./consts");
-const initialConfig = { headers: true, transformHeader: () => {}, isSkipErrors: true };
+const detect = require("./detect");
+const initialConfig = { headers: true, transformHeader: () => { }, isSkipErrors: true };
 
 const csvtojson = (
   srcFilePath,
@@ -13,7 +14,7 @@ const csvtojson = (
   const JSONArr = [];
   let header = [];
   let validRowLength = 0;
-  const modifiedConfig = {...initialConfig, ...config};
+  const modifiedConfig = { ...initialConfig, ...config };
 
   //TODO use delimeters array to split the chunk
   const transformToJSON = new Transform({
@@ -40,7 +41,7 @@ const csvtojson = (
               JSONobject[key] = splittedItem[id];
             }
             this.push(JSONobject, "utf8");
-          } else if(!modifiedConfig.isSkipErrors) {
+          } else if (!modifiedConfig.isSkipErrors) {
             throw new Error(`${splittedItem} missed few fields`)
           }
         }
