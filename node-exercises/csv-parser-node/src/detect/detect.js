@@ -22,7 +22,7 @@ const sortObject = (objectToSort) => {
 
 const detect = (csvString) => {
     if (!isValifCSVFormat(csvString)) {
-        throw Error("The input string in not a valid csv format.")
+        throw new Error("The input string in not a valid csv format.")
     }
     const data = csvString.split(/\r?\n\t/);
     if (data.length < SCANUPTO) {
