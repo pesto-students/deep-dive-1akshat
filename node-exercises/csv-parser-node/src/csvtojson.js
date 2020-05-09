@@ -1,14 +1,18 @@
 const fs = require("fs");
 const { Transform } = require("stream");
 const detect = require("./detect");
-const initialConfig = { headers: true, transformHeader: () => { }, isSkipErrors: true };
+const initialConfig = {
+  headers: true,
+  transformHeader: () => { },
+  isSkipErrors: true,
+};
 
 const csvtojson = (
   srcFilePath,
   destinationFilePath,
   config = initialConfig
 ) => {
-  const src = fs.createReadStream(srcFilePath, "utf8");
+  const src = fs.createReadStream(srcFilePath, { encoding: "utf8" });
   const destination = fs.createWriteStream(destinationFilePath);
   const JSONArr = [];
   let header = [];
@@ -17,10 +21,15 @@ const csvtojson = (
 
   //TODO use delimeters array to split the chunk
   const transformToJSON = new Transform({
-    readableObjectMode: true,
+    objectMode: true,
     transform: function (chunk, _, cb) {
-      const delimeter = detect(chunk.toString());
-      const data = chunk.toString().split(/\r?\n/);
+      let rows = chunk.toString();
+      const delimeter = detect(rows);
+      if (this.lastRowData) rows = this.lastRowData + rows;
+
+      const data = rows.split(/\r?\n/);
+      this.lastRowData = data.splice(data.length - 1, 1)[0];
+
       if (modifiedConfig.headers) {
         if (header.length === 0) {
           const splittedHeader = data.splice(0, 1)[0].split(delimeter);
@@ -42,7 +51,7 @@ const csvtojson = (
             }
             this.push(JSONobject, "utf8");
           } else if (!modifiedConfig.isSkipErrors) {
-            throw new Error(`${splittedItem} missed few fields`)
+            throw new Error(`${splittedItem} missed few fields`);
           }
         }
       } else {
@@ -51,6 +60,27 @@ const csvtojson = (
           this.push(splittedItem, "utf8");
         }
       }
+      cb();
+    },
+    flush: function (cb) {
+      if (this.lastRowData) {
+        if (modifiedConfig.headers) {
+          const JSONobject = {};
+          const splittedItem = this.lastRowData.split(/,(?! )/);
+          if (splittedItem.length === validRowLength) {
+            for (let [id, key] of header.entries()) {
+              JSONobject[key] = splittedItem[id];
+            }
+            this.push(JSONobject, "utf8");
+          } else if (!modifiedConfig.isSkipErrors) {
+            throw new Error(`${splittedItem} missed few fields`);
+          }
+        } else {
+          const splittedItem = this.lastRowData.split(/,(?! )/);
+          this.push(splittedItem, "utf8");
+        }
+      }
+      this.lastRowData = null;
       cb();
     },
   });
@@ -80,7 +110,8 @@ const csvtojson = (
     .pipe(transformToJSON)
     .on("data", (chunk) => {
       JSONArr.push(chunk);
-    }).on('error', (err) => {
+    })
+    .on("error", (err) => {
       console.log(err);
     })
     .on("end", () => {
