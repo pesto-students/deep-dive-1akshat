@@ -47,8 +47,4 @@ const detect = (csvString) => {
         }
 };
 
-// export {
-//     detect,
-// };
-
 module.exports = detect;
