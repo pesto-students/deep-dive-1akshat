@@ -1,7 +1,7 @@
 const csvtojson = require('./csvtojson');
 const jsontocsv = require('./jsontocsv');
 
-const FILE_PATH = __dirname+'/files/file.csv';
+const FILE_PATH = __dirname+'/data/file.csv';
 
 const csvParse = (srcFilePath, destinationFilePath, errDestiantionPath) => {
     if(srcFilePath.includes('.csv')) {
@@ -11,5 +11,5 @@ const csvParse = (srcFilePath, destinationFilePath, errDestiantionPath) => {
     }
 }
 
-csvParse(FILE_PATH, __dirname+"/files/file.json", __dirname+"/files/error.json");
+csvParse(FILE_PATH, __dirname+'/data/file.json', __dirname+'/data/error.json');
 //csvParse("./files/file.json", "./files/newFile.csv");

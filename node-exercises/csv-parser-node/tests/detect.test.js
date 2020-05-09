@@ -1,4 +1,4 @@
-const detect = require('./detect');
+const detect = require('../src/detect/detect');
 
 describe('error cases', () => {
     test('should throw an error when the csv string is not valid', () => {
