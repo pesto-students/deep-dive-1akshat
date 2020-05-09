@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { Transform } = require("stream");
 const detect = require("./detect/detect");
+const checkChunkLength = require('./find-chunk-length/find-chunk-length');
 
 const initialConfig = {
   headers: true,
@@ -58,7 +59,7 @@ const csvtojson = (
           if (modifiedConfig.transformHeader.length === 1) {
             header = modifiedConfig.transformHeader(splittedHeader);
           }
-          validRowLength = checkChunkLength(data, this.delimeter);
+          validRowLength = checkChunkLength(data, this.delimeter, validRowLength);
         }
         for (let item of data) {
           const JSONobject = {};
@@ -120,28 +121,6 @@ const csvtojson = (
       cb();
     },
   });
-
-  const checkChunkLength = (data, delimeter) => {
-    const object = {};
-    let key = "";
-    const pattern = new RegExp(`${delimeter}(?! )`)
-    const dataLength = data.length > 20 ? 20 : data.length;
-    for (let i = 0; i < dataLength; i++) {
-      const splittedItem = data[i].split(pattern);
-      if (object[splittedItem.length]) {
-        object[splittedItem.length]++;
-      } else {
-        object[splittedItem.length] = 1;
-      }
-    }
-    for (let [index, item] of Object.entries(object)) {
-      if (validRowLength < item) {
-        validRowLength = item;
-        key = index;
-      }
-    }
-    return parseInt(key);
-  };
 
   src.on("error", (err) => console.log(err));
   transformToJSON.on("error", (err) => console.log(err));

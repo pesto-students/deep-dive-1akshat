@@ -1,4 +1,4 @@
-const csvtojson = require("../src/csvtojson");
+const csvtojson = require("../src/scripts/csvtojson");
 const fs = require("fs");
 const FILE_PATH = __dirname+'/data/test.csv';
 const destFilePath = __dirname+'/data/test.json';
@@ -12,9 +12,7 @@ describe("csvtojson", () => {
   });
 
   test("should check passed arguments type", () => {
-    expect(() => csvtojson(FILE_PATH, "", { headers: null })).toThrow(
-      TypeError
-    );
+    expect(() => csvtojson(FILE_PATH, "", { headers: null })).toThrow(TypeError);
     expect(() =>
       csvtojson(FILE_PATH, "", { headers: false, transformHeader: "check" })
     ).toThrow(TypeError);
