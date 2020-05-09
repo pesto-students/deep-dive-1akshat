@@ -1,4 +1,4 @@
-const { DELIMETERS } = require('./consts');
+const { DELIMETERS } = require('../consts');
 
 // Scan upto 20 rows to find the delimeter
 let SCANUPTO = 20;
@@ -40,7 +40,6 @@ const detect = (csvString) => {
     const keys = Object.keys(sortedObject);
     for (const delim of keys)
         if (DELIMETERS.includes(delim)) {
-            console.log(delim);
             return delim;
         } else {
             continue;

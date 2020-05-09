@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { Transform } = require("stream");
-const detect = require("./detect");
+const detect = require("./detect/detect");
 const initialConfig = {
   headers: true,
   transformHeader: () => { },
