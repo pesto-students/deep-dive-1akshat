@@ -1,8 +1,12 @@
 const { DELIMETERS } = require('../consts');
 
 // Scan upto 20 rows to find the delimeter
-let SCANUPTO = 20;
+let SCANUPTO = 30;
 
+const isValifCSVFormat = (csvString) => {
+    const regexP = new RegExp(/^[a-z0-9]+(?:[,:|^*#@!\t\r\n] ?[a-z0-9]+)*$/);
+    return regexP.test(csvString);
+}
 
 const sortObject = (objectToSort) => {
     let resultObject = {};
@@ -16,9 +20,11 @@ const sortObject = (objectToSort) => {
     return resultObject;
 }
 
-
 const detect = (csvString) => {
-    const data = csvString.split(/\r?\n/);
+    if (!isValifCSVFormat(csvString)) {
+        throw Error("The input string in not a valid csv format.")
+    }
+    const data = csvString.split(/\r?\n\t/);
     if (data.length < SCANUPTO) {
         SCANUPTO = data.length;
     }
@@ -28,8 +34,8 @@ const detect = (csvString) => {
     for (const item of slicedData) {
         for (const char of item) {
             // Check if the char is character/ number/ space then skip
-            const regexPattern = /^[0-9a-zA-Z\s]+$/
-            if (regexPattern.test(char)) { continue };
+            const regexPattern = new RegExp(/^[0-9a-zA-Z]+$/);
+            if (regexPattern.test(char) || char === " ") { continue };
             if (char in charCounterObject) {
                 charCounterObject[char] += 1;
             } else {
@@ -43,8 +49,9 @@ const detect = (csvString) => {
         if (DELIMETERS.includes(delim)) {
             return delim;
         } else {
-            continue;
+            throw Error("Could Not find a valid delimeter.")
         }
 };
+
 
 module.exports = detect;
