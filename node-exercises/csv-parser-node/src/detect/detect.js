@@ -3,22 +3,23 @@ const { DELIMETERS } = require('../consts');
 // Scan upto 20 rows to find the delimeter
 let SCANUPTO = 20;
 
+
 const sortObject = (objectToSort) => {
     let resultObject = {};
     let keys = Object.keys(objectToSort);
-    keys.sort((a, b) => {
-        return objectToSort[a] - objectToSort[b];
-    }).reverse().forEach((key) => {
+    const sortedKeys = keys.sort((a, b) => {
+        return objectToSort[b] - objectToSort[a];
+    })
+    for (const key of sortedKeys) {
         resultObject[key] = objectToSort[key];
-    });
+    }
     return resultObject;
 }
 
-// TODO: Trim the spaces in the csv string
-// Ex: [1, 2, 3, 4, 5]
+
 const detect = (csvString) => {
     const data = csvString.split(/\r?\n/);
-    if (data < SCANUPTO) {
+    if (data.length < SCANUPTO) {
         SCANUPTO = data.length;
     }
     let slicedData = data.slice(0, SCANUPTO);
@@ -26,9 +27,9 @@ const detect = (csvString) => {
     let count = 1;
     for (const item of slicedData) {
         for (const char of item) {
-            // Check if the char is character/number then skip
-            const re = /^[0-9a-zA-Z]+$/
-            if (re.test(char)) { continue };
+            // Check if the char is character/ number/ space then skip
+            const regexPattern = /^[0-9a-zA-Z\s]+$/
+            if (regexPattern.test(char)) { continue };
             if (char in charCounterObject) {
                 charCounterObject[char] += 1;
             } else {

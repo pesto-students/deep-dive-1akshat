@@ -44,7 +44,8 @@ const csvtojson = (
         }
         for (let item of data) {
           const JSONobject = {};
-          const splittedItem = item.split(/,(?! )/);
+          const regexPattern = new RegExp(`${delimeter}(?! )`)
+          const splittedItem = item.split(regexPattern);
           if (splittedItem.length === validRowLength) {
             for (let [id, key] of header.entries()) {
               JSONobject[key] = splittedItem[id];
