@@ -16,7 +16,7 @@ const sortObject = (objectToSort) => {
 
 // TODO: Trim the spaces in the csv string
 // Ex: [1, 2, 3, 4, 5]
-const Detect = (csvString) => {
+const detect = (csvString) => {
     const data = csvString.split(/\r?\n/);
     if (data < SCANUPTO) {
         SCANUPTO = data.length;
@@ -47,6 +47,8 @@ const Detect = (csvString) => {
         }
 };
 
+// export {
+//     detect,
+// };
 
-
-module.exports = { Detect };
+module.exports = detect;

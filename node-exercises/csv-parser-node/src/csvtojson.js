@@ -1,7 +1,6 @@
 const fs = require("fs");
 const { Transform } = require("stream");
-const DELIMETERS = require("./consts");
-const detect = require("./detect");
+const Detect = require("./detect");
 const initialConfig = { headers: true, transformHeader: () => { }, isSkipErrors: true };
 
 const csvtojson = (
@@ -20,10 +19,11 @@ const csvtojson = (
   const transformToJSON = new Transform({
     readableObjectMode: true,
     transform: function (chunk, _, cb) {
+      const delimeter = Detect(chunk.toString());
       const data = chunk.toString().split(/\r?\n/);
       if (modifiedConfig.headers) {
         if (header.length === 0) {
-          const splittedHeader = data.splice(0, 1)[0].split(",");
+          const splittedHeader = data.splice(0, 1)[0].split(delimeter);
           header = splittedHeader;
           if (
             typeof modifiedConfig.transformHeader === "function" &&
