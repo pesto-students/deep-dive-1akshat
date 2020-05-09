@@ -54,13 +54,10 @@ const csvtojson = (
         if (header.length === 0) {
           const splittedHeader = data.splice(0, 1)[0].split(this.delimeter);
           header = splittedHeader;
-          if (
-            typeof modifiedConfig.transformHeader === "function" &&
-            modifiedConfig.transformHeader.length === 1
-          ) {
+          if (modifiedConfig.transformHeader.length === 1) {
             header = modifiedConfig.transformHeader(splittedHeader);
           }
-          validRowLength = checkChunkLength(data);
+          validRowLength = checkChunkLength(data, this.delimeter);
         }
         for (let item of data) {
           const JSONobject = {};
@@ -123,12 +120,13 @@ const csvtojson = (
     },
   });
 
-  const checkChunkLength = (data) => {
+  const checkChunkLength = (data, delimeter) => {
     const object = {};
     let key = "";
+    const pattern = new RegExp(`${delimeter}(?! )`)
     const dataLength = data.length > 20 ? 20 : data.length;
     for (let i = 0; i < dataLength; i++) {
-      const splittedItem = data[i].split(/,(?! )/);
+      const splittedItem = data[i].split(pattern);
       if (object[splittedItem.length]) {
         object[splittedItem.length]++;
       } else {
