@@ -1,9 +1,10 @@
 const fs = require("fs");
 const { Transform } = require("stream");
 const detect = require("./detect/detect");
+
 const initialConfig = {
   headers: true,
-  transformHeader: () => {},
+  transformHeader: () => { },
   isSkipErrors: true,
   shouldCaptureErrorData: true,
   errDestiantionPath: "",
@@ -72,7 +73,7 @@ const csvtojson = (
               "error",
               new TypeError(
                 `${splittedItem} missed ${
-                  validRowLength - splittedItem.length
+                validRowLength - splittedItem.length
                 } fields`
               )
             );
@@ -104,7 +105,7 @@ const csvtojson = (
               "error",
               new TypeError(
                 `${splittedItem} missed ${
-                  validRowLength - splittedItem.length
+                validRowLength - splittedItem.length
                 } fields`
               )
             );

@@ -1,6 +1,5 @@
 const fs = require("fs");
 const { Transform } = require("stream");
-const DELIMETERS = require("./consts");
 
 const jsontocsv = (srcFilePath, destinationFilePath) => {
   const src = fs.createReadStream(srcFilePath, "utf8");

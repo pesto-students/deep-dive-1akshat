@@ -1,12 +1,12 @@
-const { DELIMETERS } = require('../consts');
+const { DELIMETERS } = require('../../consts');
 
-// Scan upto 20 rows to find the delimeter
+// Scan upto 30 rows to find the delimeter
 let SCANUPTO = 30;
 
-const isValifCSVFormat = (csvString) => {
-    const regexP = new RegExp(/^[a-z0-9]+(?:[,:|^*#@!\t\r\n] ?[a-z0-9]+)*$/);
-    return regexP.test(csvString);
-}
+// const isValifCSVFormat = (csvString) => {
+//     const regexP = new RegExp(/^[A-Za-z0-9]+(?:[,:|^*#@!\t\r\n] ?[A-Za-z0-9]+)*$/gm);
+//     return regexP.test(csvString);
+// }
 
 const sortObject = (objectToSort) => {
     let resultObject = {};
@@ -21,9 +21,9 @@ const sortObject = (objectToSort) => {
 }
 
 const detect = (csvString) => {
-    if (!isValifCSVFormat(csvString)) {
-        throw new Error("The input string in not a valid csv format.")
-    }
+    // if (!isValifCSVFormat(csvString)) {
+    //     throw new Error("The input string in not a valid csv format.")
+    // }
     const data = csvString.split(/\r?\n\t/);
     if (data.length < SCANUPTO) {
         SCANUPTO = data.length;
@@ -45,6 +45,9 @@ const detect = (csvString) => {
     }
     const sortedObject = sortObject(charCounterObject);
     const keys = Object.keys(sortedObject);
+    if (keys.length === 0) {
+        throw Error('No valid delimeter found.');
+    }
     for (const delim of keys)
         if (DELIMETERS.includes(delim)) {
             return delim;
