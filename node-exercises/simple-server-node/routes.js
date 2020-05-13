@@ -2,12 +2,13 @@
 
 const routes = {
     GET: [
+        '/',
         '/home',
         '/blog'
     ],
     POST: [
         '/login',
-        'signup'
+        '/signup'
     ]
 }
 
