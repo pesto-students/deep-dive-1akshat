@@ -1,0 +1,22 @@
+{
+  "name": "simple-server-node",
+  "version": "1.0.0",
+  "description": "A simple Node Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1akshat"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "javascript",
+    "nodejs",
+    "server"
+  ],
+  "author": "akshat",
+  "license": "ISC"
+}
