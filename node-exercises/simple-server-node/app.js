@@ -15,15 +15,6 @@ const bodyMiddleware = ()=>{
   console.log("bodyMiddleware")
 }
 
-
-
-
-
-
-
-
-
-
 const parser = async()=>{
 
   let promise = new Promise((resolve, reject) => {
@@ -42,53 +33,39 @@ buddyServer.route({
   middlewares: [bodyMiddleware],
   handler: testController
 })
-​
-buddyServer.route({
-  method: 'POST',
-  path: '/get/user',
-  middlewares: [bodyMiddleware],
-  handler: testController
-})
-​
+
 buddyServer.route({
   method: 'GET',
   path: '/get/user/:id',
   middlewares: [bodyMiddleware],
   handler: testController
 })
-​
+
 buddyServer.route({
   method: 'GET',
   path: '/get/user/:id/:name/:age',
   middlewares: [bodyMiddleware],
   handler: testController
 })
-​
+
 buddyServer.route({
   method: 'post',
-  path: '/test/',
+  path: '/user',
   middlewares: [bodyMiddleware],
   handler: testController
 })
-​
+
 buddyServer.route({
   method: 'put',
   path: '/test',
   middlewares: [bodyMiddleware],
   handler: testController
 })
-​
-buddyServer.route({
-  method: 'post',
-  path: '/user/',
-  middlewares: [bodyMiddleware],
-  handler: testController
-})
-​
+
+
 buddyServer.addMiddleware([parser])
-​
 buddyServer.start(8000);
-Collapse
+
 
 
 

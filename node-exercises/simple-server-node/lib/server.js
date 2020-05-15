@@ -77,22 +77,34 @@ class Buddy {
       searchParams[params[0]] = params[1];
     }
 
+    // add params to request
+    request.params = searchParams
+
+
     // add searchParams to request
   
     let routesMapKey = this.fetchRoutesMapKey(pathname, methodType);
   
-    const routeObj = this.routesMap.get(routesMapKey)[methodType]
+    const routeObjFromMap = this.routesMap.get(routesMapKey)
 
-    if (!routeObj) {
+    if (!routeObjFromMap) {
       this.write(response, 404, 'text/html', '<h1> Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>')
       return;
     }
 
-    this.middlewares(request, response, routeObj.routeMiddlewares)
+    const routeObj = routeObjFromMap[methodType]
+
+    if(routeObj){
+      this.middlewares(request, response, routeObj.routeMiddlewares)
       .then(({ request, response }) => {
         return this.resolveController(request, response, routeObj.handler);
       })
       .catch(error => { throw Error(error) })
+    }
+    else {
+      this.write(response, 404, 'text/html', '<h1> Not Found</h1> <p>The requested METHOD was not found on the server. /p>')
+      return;
+    }
   }
 
   resolveController = (request, response, handler, ) => {
