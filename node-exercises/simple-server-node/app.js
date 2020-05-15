@@ -1,36 +1,32 @@
 // buddy
 const testController = require('./controller/test')
-
 const Buddy = require('./lib/server');
-const routes = require('./routes');
+// const routes = require('./routes');
 
 const config = {
-  httpsOptions:{
-  }
+  httpsOptions: {},
 }
 
 const buddyServer = new Buddy(config);
 
-const bodyMiddleware = ()=>{
-  console.log("bodyMiddleware")
+const bodyMiddleware = () => {
+  console.log("bodyMiddleware");
 }
 
-const parser = async()=>{
-
+const parser = async () => {
   let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve("promise middleware"), 1000)
+    setTimeout(() => resolve("promise middleware"), 1000);
   });
-
-  let result = await promise; // wait until the promise resolves (*)
-  console.log(result)
-  return result
-
+  // wait until the promise resolves (*)
+  let result = await promise;
+  console.log(result);
+  return result;
 }
 
 buddyServer.route({
   method: 'GET',
   path: '/get/user',
-  middlewares: [bodyMiddleware],
+  middlewares: [],
   handler: testController
 })
 
@@ -63,9 +59,5 @@ buddyServer.route({
 })
 
 
-buddyServer.addMiddleware([parser])
+buddyServer.addMiddleware([parser]);
 buddyServer.start(8000);
-
-
-
-
