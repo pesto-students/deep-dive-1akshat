@@ -9,8 +9,11 @@ class Buddy {
     }
 
     start(port) {
-        //TODO: port validation  method
-        this.app.listen(port);
+        if (port > 1023 && port <= 65535) {
+            this.app.listen(port);
+        } else {
+            throw Error("Not a valid Port. Put a valid port in range of 1023 to 65535");
+        }
     }
 
     routeParser = (request, response) => {
