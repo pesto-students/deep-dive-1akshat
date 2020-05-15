@@ -18,5 +18,8 @@
     "server"
   ],
   "author": "akshat",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
