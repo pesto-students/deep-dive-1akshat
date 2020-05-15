@@ -4,17 +4,17 @@ const routes = {
     '/': {
         method: 'GET',
         path: 'controller/newcontroller',
-        resolver: 'index'
+        handler: 'index'
     },
     '/home': {
         method: 'GET',
         path: 'controller/newcontroller',
-        resolver: 'home'
+        handler: 'home'
     },
     '/login': {
         method: 'POST',
         path: 'controller/newcontroller',
-        resolver: 'login'
+        handler: 'login'
     }
 }
 
