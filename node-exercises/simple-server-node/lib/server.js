@@ -1,7 +1,10 @@
 const http = require('http');
 const https = require('https');
 const url = require('url')
-const bodyBuilder = require('../middleware/middlewares');
+const Response = require('./response')
+const Request = require('./request')
+
+const { execMiddlewares } = require('./middlewares');
 
 const METHODS_ARR = ['get', 'post', 'delete', 'put', 'patch', 'head']
 
@@ -14,7 +17,9 @@ class Buddy {
     this.app = isHttpsServer ? https.createServer(httpsOptions) : http.createServer();
 
     this.appMiddlewares = [];
-    this.app.on('request', this.routeParser);
+    this.app.on('request', this.requestHandler);
+    this.app.on('connection', this.onConnection);
+
     // map to keep record of routes
     this.routesMap = new Map()
 
@@ -55,46 +60,51 @@ class Buddy {
     }
   }
 
-  routeParser = (request, response) => {
+  requestHandler = (req, res) => {
+
+    const request = Request(req)
+    const response = Response(res)
 
     const path = request.url;
     const host = request.headers.host;
     const urlPartsObj = new URL(path, `http://${host}`);
-    const methodType = request.method.toLowerCase()
-    let params = urlPartsObj.searchParams;
+    const methodType = request.method.toLowerCase();
+    let pathname = urlPartsObj.pathname;
+    // This is an array.
+    let search = new URLSearchParams(urlPartsObj.search);
+    let searchParams = {};
+    for (let params of search) {
+      searchParams[params[0]] = params[1];
+    }
 
-    let pathname = urlPartsObj.pathname
-
-    let routesMapKey = this._fetchroutesMapKey(pathname)
-
-    const routeObj = this.routesMap.get(pathname)[methodType]
+    // add searchParams to request
+  
+    let routesMapKey = this.fetchRoutesMapKey(pathname, methodType);
+  
+    const routeObj = this.routesMap.get(routesMapKey)[methodType]
 
     if (!routeObj) {
       this.write(response, 404, 'text/html', '<h1> Not Found</h1> <p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>')
       return;
     }
-    this.middleware(request, response, () => {
 
-      // execute funcrtions from this.appMiddlewares 
-
-      return this.resolveController(routeObj, request, response);
-    });
+    this.middlewares(request, response, routeObj.routeMiddlewares)
+      .then(({ request, response }) => {
+        return this.resolveController(request, response, routeObj.handler);
+      })
+      .catch(error => { throw Error(error) })
   }
 
-  resolveController = (routeObj, request, response) => {
-
-    // routeObj.routeMiddlewares
-
-    const data = routeObj.handler({ request, response })
-    // process result snd send response
-    return this.write(response, '200', {}, JSON.stringify(data))
-
+  resolveController = (request, response, handler, ) => {
+    handler({ request, response })
   }
 
-  middleware = (request, response, callback) => {
-    bodyBuilder(request, result => {
-      request.body = result;
-      callback();
+  middlewares = (request, response, routeMiddlewares) => {
+    return new Promise((resolve, reject) => {
+      const middlewaresArr = [...this.appMiddlewares, ...routeMiddlewares] // need to check for deep objects
+      execMiddlewares(request, response, middlewaresArr)
+        .then(({ request, response }) => resolve({ request, response }))
+        .catch(error => { reject(error) })
     })
   }
 
@@ -113,35 +123,54 @@ class Buddy {
     }
   }
 
-
   addMiddleware = (middlewareArr = []) => {
     // check valid array
-
     this.appMiddlewares = middlewareArr;
 
   }
 
-  _fetchroutesMapKey = (pathname) => {
-
-    // TODO:
-    let hasKey = this.routesMap.has(pathname)
+  // This function parses the url to find the patterns and return the params. Supported Pattern (: [colon])
+  fetchRoutesMapKey = (requestedPath, methodType) => {
+    let hasKey = this.routesMap.has(requestedPath);
     if (hasKey) {
-      return pathname
+      return requestedPath;
     }
-
-    const pathnameParts = pathname.trim().split('/')
-    const keysArr = []
-    const matchingKeys = []
-    for (let key of this.routesMap.keys()) {
-      console.log(key)
-      keysArr.push(key)
-      pathname.includes(key) ? matchingKeys.push(key) : null
+    const validRoutes = this.routesMap.keys();
+    for (let actualRoutePath of validRoutes) {
+      // Ref: https://stackoverflow.com/questions/54245919/pattern-match-in-nodejs-rest-url
+      let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
+      regexP = new RegExp(`^${regexP}$`);
+      const valid = regexP.test(requestedPath);
+      if (valid) {
+        let actualRoutePathSplit = actualRoutePath.split('/');
+        let indexOfParams = [];
+        actualRoutePathSplit.forEach((el, index) => {
+          if (el.startsWith(':')) {
+            const obj = {
+              index: index,
+              param: el.split(':')[1],
+            }
+            indexOfParams.push(obj);
+          }
+        })
+        let requestedPathSplit = requestedPath.split('/');
+        indexOfParams.forEach(el => {
+          const paramValue = requestedPathSplit[el.index];
+          el.paramValue = paramValue;
+          delete (el.index);
+        })
+        let params = {};
+        indexOfParams.map(el => {
+          params[el.param] = el.paramValue;
+        });
+        return params;
+      }
     }
-    // if true retun pathn
-    console.log(matchingKeys, keysArr)
-
   }
 
+  onConnection = (connection) => {
+    console.log("on connection")
+  }
 }
 
 module.exports = Buddy;
