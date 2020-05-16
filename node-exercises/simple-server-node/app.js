@@ -7,8 +7,8 @@ const fileReader = require('./controller/file')
 const { authentication } = require('./lib/middlewares');
 const Buddy = require('./lib/server');
 // const routes = require('./routes');
-
 try {
+
   const config = {
     httpsOptions: {},
   }
@@ -61,14 +61,14 @@ try {
     method: 'GET',
     path: '/get/user',
     middlewares: [authentication, bodyMiddleware],
-    handler: testController
+    handler: baseController
   })
 
   buddyServer.route({
     method: 'GET',
     path: '/get/user/info',
     middlewares: [authentication, bodyMiddleware],
-    handler: testController
+    handler: baseController
   })
 
 
@@ -76,15 +76,15 @@ try {
     method: 'GET',
     path: '/get/user/:id/:name/:age',
     middlewares: [bodyMiddleware],
-    handler: testController
+    handler: baseController
   })
 
   buddyServer.addMiddleware([parser]);
   buddyServer.start(8000);
-
 } catch (error) {
-  console.log(error)
+  console.log(error);
 }
+
 
 
 process.on('beforeExit', (code) => {
