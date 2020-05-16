@@ -62,6 +62,10 @@ class Buddy {
     }
   }
 
+  close() {
+    this.app.close()
+  }
+
   requestHandler = (req, res) => {
     try {
       const request = Request(req);
@@ -177,6 +181,7 @@ class Buddy {
         continue;
       }
     }
+    return {};
   };
 
   onConnection = (connection) => {
