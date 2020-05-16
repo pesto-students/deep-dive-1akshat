@@ -27,6 +27,17 @@ const Buddy = require('./lib/server');
   })
 
 ```
+
+## Pattern Matching in URLs
+1. For passing any parameter in the url you can use generic pattern of ? as default.
+```
+'/api/users/?location=blr&age=23'
+```
+2. You can additionaly pass additional parameters following <strong>:</strong> (colon).
+```
+'/api/users/:id'
+```
+
 ## .route({})
 - Add routes to server using this method
 
