@@ -1,4 +1,4 @@
-const signUp = ({ request, response }) => {
+const signUp = () => {
 response.json({status:200,result:"OK"})
 };
 
