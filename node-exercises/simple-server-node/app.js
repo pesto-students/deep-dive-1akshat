@@ -3,6 +3,7 @@ const testController = require('./controller/test');
 const signupController = require('./controller/signUp');
 const loginController = require('./controller/login');
 const userInfoController = require('./controller/userInfo');
+const fileReader = require('./controller/file')
 const { authentication } = require('./lib/middlewares');
 const Buddy = require('./lib/server');
 // const routes = require('./routes');
@@ -34,6 +35,13 @@ try {
     middlewares: [bodyMiddleware],
     handler: signupController
   })
+
+  buddyServer.route({
+    method: 'get',
+    path: '/file/:name',
+    handler: fileReader
+  })
+
 
   buddyServer.route({
     method: 'POST',
@@ -71,9 +79,24 @@ try {
     handler: testController
   })
 
-
   buddyServer.addMiddleware([parser]);
   buddyServer.start(8000);
+
 } catch (error) {
   console.log(error)
 }
+
+
+process.on('beforeExit', (code) => {
+  console.log('Process beforeExit event with code: ', code);
+  //close server here
+  buddyServer.close()
+});
+
+process.on('exit', (code) => {
+  console.log('Process exit event with code: ', code);
+});
+
+process.on('uncaughtException', (err) => {
+  console.log(err);
+})

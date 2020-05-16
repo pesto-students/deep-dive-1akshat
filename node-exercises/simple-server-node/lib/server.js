@@ -84,7 +84,7 @@ class Buddy {
         searchParams[params[0]] = params[1];
       }
 
-      let { extraParams, routesMapKey } = this.fetchRoutesMapKey(pathname, methodType);
+      let { extraParams={}, routesMapKey='' } = this.fetchRoutesMapKey(pathname, methodType);
       const finalParams = { ...searchParams, ...extraParams };
       // add params to request
       request.params = finalParams;

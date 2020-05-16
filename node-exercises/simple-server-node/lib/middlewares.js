@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const authentication = (request, response) => {
   const routePath = request.url;
-  return fs.writeFileSync('static/authPrivateRoutes.txt', routePath);
+  return fs.appendFileSync('static/authPrivateRoutes.txt', `${routePath}\n`);
 }
 
 const execMiddlewares = async (request, response, middlewareArr) => {
