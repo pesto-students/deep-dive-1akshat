@@ -1,1 +1,2 @@
+/get/user/info
 /get/user

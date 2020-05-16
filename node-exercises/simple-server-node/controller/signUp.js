@@ -2,7 +2,6 @@ const fs = require('fs');
 
 
 const signUp = ({ request, response }) => {
-    console.log('INSEIDEDDKA')
     try {
         const bodyData = request.body;
         if (bodyData.password === bodyData.rememberPassword) {
