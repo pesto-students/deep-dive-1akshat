@@ -1,5 +1,11 @@
 
-const { APPLICATION_JSON, FORM_URLENCODED } = require('./constants')
+const { APPLICATION_JSON, FORM_URLENCODED } = require('./constants');
+const fs = require('fs');
+
+const authentication = (request, response) => {
+  const routePath = request.url;
+  return fs.writeFileSync('static/authPrivateRoutes.txt', routePath);
+}
 
 const execMiddlewares = async (request, response, middlewareArr) => {
   return new Promise(async (resolve, reject) => {
@@ -47,7 +53,11 @@ const bodyBuilder = (request, response) => {
             body += chunk.toString();
           });
           request.on('end', () => {
-            resolve(transformData(body, requestHeaders));
+            const bodyData = transformData(body, requestHeaders)
+            request.body = bodyData
+            resolve(body);
+
+
           });
         } else {
           resolve(null);
@@ -63,4 +73,4 @@ const bodyBuilder = (request, response) => {
 }
 
 
-module.exports = { execMiddlewares };
+module.exports = { execMiddlewares, authentication };
