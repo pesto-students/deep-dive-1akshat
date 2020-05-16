@@ -19,25 +19,29 @@ class Buddy {
   }
 
   checkRouteArgs = ({ method, path, handler, middlewares }) => {
-    if (!(middlewares instanceof Array)) throw Error('middlewares is not Array');
-    if (!handler || !(handler instanceof Function)) throw Error('handler is not valid function');
+    if (!(middlewares instanceof Array)) {
+      throw Error('middlewares is not Array');
+    }
+    if (!handler || !(handler instanceof Function)) {
+      throw Error('handler is not valid function');
+    }
     if (!(method && typeof method === 'string' && METHODS_ARR.includes(method.toLowerCase()))) {
       throw Error('Provide valid method');
     }
-    if (!path || !(typeof (path) === 'string')) throw Error('route path is not valid');
+    if (!path || !(typeof (path) === 'string')) {
+      throw Error('route path is not valid');
+    }
   };
 
   route = ({ method, path, handler, middlewares = [] }) => {
     try {
       this.checkRouteArgs({ method, path, handler, middlewares });
-
       let methodType = method.toLowerCase();
       const currentRouteObj = {};
       currentRouteObj[methodType] = {
         handler: handler,
         routeMiddlewares: middlewares
       };
-
       let previousRouteObj = this.routesMap.get(path);
       if (previousRouteObj) {
         previousRouteObj[methodType] = currentRouteObj[methodType];
@@ -58,7 +62,7 @@ class Buddy {
     }
   }
 
-  close(){
+  close() {
     this.app.close()
   }
 
@@ -82,20 +86,15 @@ class Buddy {
 
       let { extraParams, routesMapKey } = this.fetchRoutesMapKey(pathname, methodType);
       const finalParams = { ...searchParams, ...extraParams };
-
       // add params to request
       request.params = finalParams;
-
       // get route details from map
       const routeObjFromMap = this.routesMap.get(routesMapKey);
-
       if (!routeObjFromMap) {
         this.write(response, 404, 'text/html', ROUTE_NOT_FOUND);
         return;
       }
-
       const routeObj = routeObjFromMap[methodType];
-
       if (routeObj) {
         this.middlewares(request, response, routeObj.routeMiddlewares)
           .then(({ request, response }) => {
@@ -109,7 +108,7 @@ class Buddy {
         return;
       }
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 
@@ -139,52 +138,51 @@ class Buddy {
     this.appMiddlewares = middlewareArr;
   };
 
- // This function parses the url to find the patterns and return the params. Supported Pattern (: [colon])
- fetchRoutesMapKey = (requestedPath) => {
-  let hasKey = this.routesMap.has(requestedPath);
-  if (hasKey) {
-    return {
-      extraParams: {},
-      routesMapKey: requestedPath
-    };
-  }
-  const validRoutes = this.routesMap.keys();
-  for (let actualRoutePath of validRoutes) {
-    // Ref: https://stackoverflow.com/questions/54245919/pattern-match-in-nodejs-rest-url
-    let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
-    regexP = new RegExp(`^${regexP}$`);
-    const valid = regexP.test(requestedPath);
-    let actualRoutePathSplit = actualRoutePath.split('/');
-    let indexOfParams = [];
-    actualRoutePathSplit.forEach((el, index) => {
-      if (el.startsWith(':')) {
-        const obj = {
-          index: index,
-          param: el.split(':')[1]
-        };
-        indexOfParams.push(obj);
-      }
-    });
-    if (valid) {
-      let requestedPathSplit = requestedPath.split('/');
-      indexOfParams.forEach((el) => {
-        const paramValue = requestedPathSplit[el.index];
-        el.paramValue = paramValue;
-        delete el.index;
-      });
-      let params = {};
-      indexOfParams.map((el) => {
-        params[el.param] = el.paramValue;
-      });
+  // This function parses the url to find the patterns and return the params. Supported Pattern (: [colon])
+  fetchRoutesMapKey = (requestedPath) => {
+    let hasKey = this.routesMap.has(requestedPath);
+    if (hasKey) {
       return {
-        extraParams: params,
-        routesMapKey: actualRoutePath
+        extraParams: {}, routesMapKey: requestedPath
       };
-    } else {
-      continue;
     }
-  }
-};
+    const validRoutes = this.routesMap.keys();
+    for (let actualRoutePath of validRoutes) {
+      let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
+      regexP = new RegExp(`^${regexP}$`);
+      const valid = regexP.test(requestedPath);
+      let actualRoutePathSplit = actualRoutePath.split('/');
+      let indexOfParams = [];
+      actualRoutePathSplit.forEach((el, index) => {
+        if (el.startsWith(':')) {
+          const obj = {
+            index: index,
+            param: el.split(':')[1]
+          };
+          indexOfParams.push(obj);
+        }
+      });
+      if (valid) {
+        let requestedPathSplit = requestedPath.split('/');
+        indexOfParams.forEach((el) => {
+          const paramValue = requestedPathSplit[el.index];
+          el.paramValue = paramValue;
+          delete el.index;
+        });
+        let params = {};
+        indexOfParams.map((el) => {
+          params[el.param] = el.paramValue;
+        });
+        return {
+          extraParams: params,
+          routesMapKey: actualRoutePath
+        };
+      } else {
+        continue;
+      }
+    }
+    return {};
+  };
 
   onConnection = (connection) => {
     console.log('on connection');
