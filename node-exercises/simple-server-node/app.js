@@ -37,7 +37,7 @@ try {
   })
 
   buddyServer.route({
-    method: 'get',
+    method: 'GET',
     path: '/file/:name',
     handler: fileReader
   })

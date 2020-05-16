@@ -13,6 +13,7 @@ const execMiddlewares = async (request, response, middlewareArr) => {
       // add bodyBuilder to array
       middlewareArr.push(bodyBuilder);
       for (const fn of middlewareArr) {
+        //TODO: check type of fn is function / async function
         await fn(request, response);
       }
       resolve({ request, response });
