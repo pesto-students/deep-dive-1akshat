@@ -63,7 +63,7 @@ class Buddy {
   }
 
   close() {
-    this.app.close()
+    this.app.close();
   }
 
   requestHandler = (req, res) => {
