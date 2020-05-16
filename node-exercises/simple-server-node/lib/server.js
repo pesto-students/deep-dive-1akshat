@@ -56,6 +56,7 @@ class Buddy {
 
   start(port) {
     if (port > PORT_MIN_RANGE && port <= PORT_MAX_RANGE) {
+      console.log(`listening on port ${port}`);
       this.app.listen(port);
     } else {
       throw Error('Not a valid Port. Put a valid port in range of 1023 to 65535');
@@ -84,7 +85,7 @@ class Buddy {
         searchParams[params[0]] = params[1];
       }
 
-      let { extraParams={}, routesMapKey='' } = this.fetchRoutesMapKey(pathname, methodType);
+      let { extraParams = {}, routesMapKey = '' } = this.fetchRoutesMapKey(pathname, methodType);
       const finalParams = { ...searchParams, ...extraParams };
       // add params to request
       request.params = finalParams;
