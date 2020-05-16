@@ -1,5 +1,5 @@
 // buddy
-const testController = require('./controller/test');
+const baseController = require('./controller/base');
 const signupController = require('./controller/signUp');
 const loginController = require('./controller/login');
 const userInfoController = require('./controller/userInfo');
