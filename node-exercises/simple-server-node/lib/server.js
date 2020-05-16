@@ -58,6 +58,10 @@ class Buddy {
     }
   }
 
+  close(){
+    this.app.close()
+  }
+
   requestHandler = (req, res) => {
     try {
       const request = Request(req);
@@ -135,55 +139,52 @@ class Buddy {
     this.appMiddlewares = middlewareArr;
   };
 
-  // This function parses the url to find the patterns and return the params. Supported Pattern (: [colon])
-  fetchRoutesMapKey = (requestedPath) => {
-    let hasKey = this.routesMap.has(requestedPath);
-    if (hasKey) {
-      return {
-        extraParams: {},
-        routesMapKey: requestedPath
-      };
-    }
-    const validRoutes = this.routesMap.keys();
-    for (let actualRoutePath of validRoutes) {
-      // Ref: https://stackoverflow.com/questions/54245919/pattern-match-in-nodejs-rest-url
-      let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
-      regexP = new RegExp(`^${regexP}$`);
-      const valid = regexP.test(requestedPath);
-      let actualRoutePathSplit = actualRoutePath.split('/');
-      let indexOfParams = [];
-      actualRoutePathSplit.forEach((el, index) => {
-        if (el.startsWith(':')) {
-          const obj = {
-            index: index,
-            param: el.split(':')[1]
-          };
-          indexOfParams.push(obj);
-        }
-      });
-      if (valid) {
-        let requestedPathSplit = requestedPath.split('/');
-        indexOfParams.forEach((el) => {
-          const paramValue = requestedPathSplit[el.index];
-          el.paramValue = paramValue;
-          delete el.index;
-        });
-        let params = {};
-        indexOfParams.map((el) => {
-          params[el.param] = el.paramValue;
-        });
-        return {
-          extraParams: params,
-          routesMapKey: actualRoutePath
+ // This function parses the url to find the patterns and return the params. Supported Pattern (: [colon])
+ fetchRoutesMapKey = (requestedPath) => {
+  let hasKey = this.routesMap.has(requestedPath);
+  if (hasKey) {
+    return {
+      extraParams: {},
+      routesMapKey: requestedPath
+    };
+  }
+  const validRoutes = this.routesMap.keys();
+  for (let actualRoutePath of validRoutes) {
+    // Ref: https://stackoverflow.com/questions/54245919/pattern-match-in-nodejs-rest-url
+    let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
+    regexP = new RegExp(`^${regexP}$`);
+    const valid = regexP.test(requestedPath);
+    let actualRoutePathSplit = actualRoutePath.split('/');
+    let indexOfParams = [];
+    actualRoutePathSplit.forEach((el, index) => {
+      if (el.startsWith(':')) {
+        const obj = {
+          index: index,
+          param: el.split(':')[1]
         };
-      } else {
-        return {
-          extraParams: {},
-          routesMapKey: actualRoutePath
-        };
+        indexOfParams.push(obj);
       }
+    });
+    if (valid) {
+      let requestedPathSplit = requestedPath.split('/');
+      indexOfParams.forEach((el) => {
+        const paramValue = requestedPathSplit[el.index];
+        el.paramValue = paramValue;
+        delete el.index;
+      });
+      let params = {};
+      indexOfParams.map((el) => {
+        params[el.param] = el.paramValue;
+      });
+      return {
+        extraParams: params,
+        routesMapKey: actualRoutePath
+      };
+    } else {
+      continue;
     }
-  };
+  }
+};
 
   onConnection = (connection) => {
     console.log('on connection');
