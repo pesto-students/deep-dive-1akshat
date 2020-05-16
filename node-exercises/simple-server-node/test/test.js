@@ -1,5 +1,5 @@
 const Buddy = require('../lib/server');
-const testController = require('../controller/test');
+const testController = require('../controller/base');
 
 const config = {
     httpsOptions: {},
