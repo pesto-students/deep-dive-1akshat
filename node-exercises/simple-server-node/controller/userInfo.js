@@ -1,4 +1,4 @@
-const userInfo = (request, response) => {
+const userInfo = () => {
 
 };
 

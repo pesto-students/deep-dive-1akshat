@@ -1,4 +1,4 @@
-const login = (request, response) => {
+const login = () => {
 
 };
 
