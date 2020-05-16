@@ -1,7 +1,7 @@
 const response = res => {
   const json = ({ status, result }) => {
     res.writeHead(status, { 'Content-Type': 'application/json' });
-    res.write(result);
+    res.write(JSON.stringify(result));
     res.end('');
   }
   // do not use spread operator
