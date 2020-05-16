@@ -30,21 +30,21 @@ buddyServer.route({
   method: 'POST',
   path: '/api/v1/signup',
   middlewares: [bodyMiddleware],
-  hadnler: signupController
+  handler: signupController
 })
 
 buddyServer.route({
   method: 'POST',
   path: '/api/v1/login',
   middlewares: [bodyMiddleware],
-  hadnler: loginController
+  handler: loginController
 })
 
 buddyServer.route({
   method: 'GET',
   path: '/api/v1/user/:id',
   middlewares: [],
-  hadnler: userInfoController
+  handler: userInfoController
 })
 
 buddyServer.route({
