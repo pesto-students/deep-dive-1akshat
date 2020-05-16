@@ -1,5 +1,8 @@
 // buddy
-const testController = require('./controller/test')
+const testController = require('./controller/test');
+const signupController = require('./controller/signUp');
+const loginController = require('./controller/login');
+const userInfoController = require('./controller/userInfo');
 const Buddy = require('./lib/server');
 // const routes = require('./routes');
 
@@ -24,36 +27,37 @@ const parser = async () => {
 }
 
 buddyServer.route({
-  method: 'GET',
-  path: '/get/user',
-  middlewares: [],
-  handler: testController
+  method: 'POST',
+  path: '/api/v1/signup',
+  middlewares: [bodyMiddleware],
+  hadnler: signupController
+})
+
+buddyServer.route({
+  method: 'POST',
+  path: '/api/v1/login',
+  middlewares: [bodyMiddleware],
+  hadnler: loginController
 })
 
 buddyServer.route({
   method: 'GET',
-  path: '/get/user/:id',
+  path: '/api/v1/user/:id',
+  middlewares: [],
+  hadnler: userInfoController
+})
+
+buddyServer.route({
+  method: 'GET',
+  path: '/get/user',
   middlewares: [bodyMiddleware],
   handler: testController
 })
+
 
 buddyServer.route({
   method: 'GET',
   path: '/get/user/:id/:name/:age',
-  middlewares: [bodyMiddleware],
-  handler: testController
-})
-
-buddyServer.route({
-  method: 'post',
-  path: '/user',
-  middlewares: [bodyMiddleware],
-  handler: testController
-})
-
-buddyServer.route({
-  method: 'put',
-  path: '/test',
   middlewares: [bodyMiddleware],
   handler: testController
 })

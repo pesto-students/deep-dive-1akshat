@@ -79,10 +79,8 @@ class Buddy {
     const routeObj = routeObjFromMap[methodType];
 
     if (routeObj) {
-      console.log('OKOKOK')
       this.middlewares(request, response, routeObj.routeMiddlewares)
         .then(({ request, response }) => {
-          console.log('INININJ')
           return this.resolveController(request, response, routeObj.handler);
         }).catch(error => { throw Error(error) })
     } else {
@@ -129,7 +127,10 @@ class Buddy {
   fetchRoutesMapKey = (requestedPath) => {
     let hasKey = this.routesMap.has(requestedPath);
     if (hasKey) {
-      return requestedPath;
+      return {
+        extraParams: {},
+        routesMapKey: requestedPath
+      }
     }
     const validRoutes = this.routesMap.keys();
     for (let actualRoutePath of validRoutes) {
@@ -137,18 +138,18 @@ class Buddy {
       let regexP = actualRoutePath.replace(/:\w+/g, `([^/]+)`);
       regexP = new RegExp(`^${regexP}$`);
       const valid = regexP.test(requestedPath);
-      if (valid) {
-        let actualRoutePathSplit = actualRoutePath.split('/');
-        let indexOfParams = [];
-        actualRoutePathSplit.forEach((el, index) => {
-          if (el.startsWith(':')) {
-            const obj = {
-              index: index,
-              param: el.split(':')[1],
-            }
-            indexOfParams.push(obj);
+      let actualRoutePathSplit = actualRoutePath.split('/');
+      let indexOfParams = [];
+      actualRoutePathSplit.forEach((el, index) => {
+        if (el.startsWith(':')) {
+          const obj = {
+            index: index,
+            param: el.split(':')[1],
           }
-        })
+          indexOfParams.push(obj);
+        }
+      });
+      if (valid) {
         let requestedPathSplit = requestedPath.split('/');
         indexOfParams.forEach(el => {
           const paramValue = requestedPathSplit[el.index];
@@ -163,6 +164,11 @@ class Buddy {
           extraParams: params,
           routesMapKey: actualRoutePath
         };
+      } else {
+        return {
+          extraParams: {},
+          routesMapKey: actualRoutePath
+        }
       }
     }
   }
