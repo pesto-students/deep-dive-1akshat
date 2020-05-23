@@ -3,11 +3,13 @@ import * as d3 from 'd3';
 import XAxis from './xaxis';
 import YAxis from './yaxis';
 import Bar from './bar';
+import './style.css';
 
 class BarChart extends React.Component {
 
   render() {
     const data = this.props.data;
+    const margin = { top: 20, right: 20, bottom: 30, left: 45 };
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
     const labelKey = this.props.labelKey;
@@ -34,43 +36,44 @@ class BarChart extends React.Component {
     let bottom = 450
 
     data.forEach((bar, index) => {
-      bars.push(
-        <Bar
-          key={index}
-          x={x(bar[labelKey])}
-          y={bottom - 6 - (height - y(bar[valueKey]))}
-          width={barWidth}
-          height={height - y(bar[valueKey])}
-          style={{ fill: barColor }}
-        />
+      bars.push(<Bar
+        key={index}
+        x={x(bar[labelKey])}
+        y={bottom - 6 - (height - y(bar[valueKey]))}
+        width={barWidth}
+        height={height - y(bar[valueKey])}
+        style={{ fill: barColor }}
+      />
       )
     })
 
     return (
-      <svg width={this.props.width} height={this.props.height}>
-        <YAxis
-          y={40}
-          labels={y.ticks().reverse()}
-          start={15}
-          end={height}
-          strokeColor={strokeColor}
-          axisLabelColor={axisLabelColor}
-          strokeWidth={strokeWidth}
-        />
-
-        <g className="chart" transform={`translate(${margin.left},${margin.top})`}>
-          {bars}
-          <XAxis
-            x={bottom}
-            labels={xAxisData}
-            start={0}
-            end={width}
+      <div className="svgFrame">
+        <svg width={this.props.width} height={this.props.height}>
+          <YAxis
+            y={40}
+            labels={y.ticks().reverse()}
+            start={15}
+            end={height}
             strokeColor={strokeColor}
             axisLabelColor={axisLabelColor}
             strokeWidth={strokeWidth}
           />
-        </g>
-      </svg>
+
+          <g className="chart" transform={`translate(${margin.left},${margin.top})`}>
+            {bars}
+            <XAxis
+              x={bottom}
+              labels={xAxisData}
+              start={0}
+              end={width}
+              strokeColor={strokeColor}
+              axisLabelColor={axisLabelColor}
+              strokeWidth={strokeWidth}
+            />
+          </g>
+        </svg>
+      </div>
     );
   }
 

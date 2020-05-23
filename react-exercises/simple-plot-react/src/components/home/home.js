@@ -6,7 +6,7 @@ import './style.css';
 import axios from 'axios';
 
 const Home = () => {
-  const [url, setUrl] = useState('https://raw.githubusercontent.com/pesto-students/deep-dive-1akshat/simple-plot-react/react-exercises/simple-plot-react/src/data/data1.json');
+  const [url, setUrl] = useState('https://raw.githubusercontent.com/pesto-students/deep-dive-1akshat/simple-plot-react/react-exercises/simple-plot-react/data/data1.json');
   const [chartData, setChartData] = useState([]);
   const [chartWidth, setChartWidth] = useState(800);
   const [chartHeight, setChartHeight] = useState(500);
