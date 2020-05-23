@@ -32,18 +32,19 @@ class BarChart extends React.Component {
       .domain([0, d3.max(data, (d) => d[valueKey])])
       .range([height, 0])
 
-    let bars = []
-    let bottom = 450
+    let bars = [];
+    let bottom = 450;
 
     data.forEach((bar, index) => {
-      bars.push(<Bar
-        key={index}
-        x={x(bar[labelKey])}
-        y={bottom - 6 - (height - y(bar[valueKey]))}
-        width={barWidth}
-        height={height - y(bar[valueKey])}
-        style={{ fill: barColor }}
-      />
+      bars.push(
+        <Bar
+          key={index}
+          x={x(bar[labelKey])}
+          y={bottom - 6 - (height - y(bar[valueKey]))}
+          width={barWidth}
+          height={height - y(bar[valueKey])}
+          style={{ fill: barColor }}
+        />
       )
     })
 

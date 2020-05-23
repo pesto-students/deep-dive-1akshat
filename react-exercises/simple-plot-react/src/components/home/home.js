@@ -31,7 +31,6 @@ const Home = () => {
       .catch(error => {
         console.log('Enter a valid url');
       })
-
   }
 
   return (
