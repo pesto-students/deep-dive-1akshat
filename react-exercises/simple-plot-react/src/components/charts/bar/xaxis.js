@@ -6,23 +6,37 @@ class XAxis extends Component {
 
   render() {
     let style = {
-      stroke: "red",
-      strokeWidth: "1px"
+      stroke: this.props.strokeColor,
+      strokeWidth: this.props.strokeWidth
     }
 
-    let step = (this.props.start + this.props.end / this.props.labels.length)
-
+    let step = (this.props.start + this.props.end / this.props.labels.length);
     //D3 mathy bits   
-    let ticks = d3.range(this.props.start, this.props.end, step)
+    let ticks = d3.range(this.props.start, this.props.end, step);
 
-    let lines = []
+    let lines = [];
     ticks.forEach((tick, index) => {
-      lines.push(<line style={style} x1={tick + 10} y1={this.props.x} x2={tick + 10} y2={this.props.x + 4} />)
+      lines.push(
+        <line
+          key={index}
+          style={style}
+          x1={tick + 10}
+          y1={this.props.x}
+          x2={tick + 10}
+          y2={this.props.x + 4} />)
     })
 
     let columnLables = []
     ticks.forEach((tick, index) => {
-      columnLables.push(<text style={{ fill: "steelblue" }} x={tick + 5} y={this.props.x + 20} font-family="Verdana" font-size="10">{this.props.labels[index]}</text>)
+      columnLables.push(
+        <text
+          key={index}
+          style={{ fill: "steelblue" }}
+          x={tick + 5}
+          y={this.props.x + 20}
+          fontFamily="Verdana"
+          fontSize="10">{this.props.labels[index]}
+        </text>)
     })
 
 

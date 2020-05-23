@@ -17,8 +17,11 @@ class BarChart extends React.Component {
     const height = this.props.height - margin.top - margin.bottom;
     const labelKey = this.props.labelKey;
     const valueKey = this.props.valueKey;
-    const barColor = this.props.barColor === undefined ? '#14828E' : this.props.barColor;
-    const barWidth = this.props.barWidth === undefined ? '20' : this.props.barWidth;
+    const barColor = this.props.barColor;
+    const barWidth = this.props.barWidth;
+    const strokeColor = this.props.strokeColor;
+    const axisLabelColor = this.props.axisLabelColor;
+    const strokeWidth = this.props.strokeWidth;
 
     // this.would be x label array
     const xAxisData = data.map((d) => d.labelKey);
@@ -49,11 +52,27 @@ class BarChart extends React.Component {
 
     return (
       <svg width={this.props.width} height={this.props.height}>
-        <YAxis y={40} labels={y.ticks().reverse()} start={15} end={height} />
+        <YAxis
+          y={40}
+          labels={y.ticks().reverse()}
+          start={15}
+          end={height}
+          strokeColor={strokeColor}
+          axisLabelColor={axisLabelColor}
+          strokeWidth={strokeWidth}
+        />
 
         <g className="chart" transform={`translate(${margin.left},${margin.top})`}>
           {bars}
-          <XAxis x={bottom} labels={xAxisData} start={0} end={width} />
+          <XAxis
+            x={bottom}
+            labels={xAxisData}
+            start={0}
+            end={width}
+            strokeColor={strokeColor}
+            axisLabelColor={axisLabelColor}
+            strokeWidth={strokeWidth}
+          />
         </g>
       </svg>
     );

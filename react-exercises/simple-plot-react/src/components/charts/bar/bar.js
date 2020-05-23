@@ -5,7 +5,7 @@ class Bar extends React.Component {
   render() {
     return (
       <g>
-        <rect class="bar"
+        <rect className="bar"
           style={this.props.style}
           x={this.props.x}
           y={this.props.y + 5}

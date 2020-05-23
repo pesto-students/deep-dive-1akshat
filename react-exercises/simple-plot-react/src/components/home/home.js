@@ -5,25 +5,39 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 import axios from 'axios';
 
+// Sample Data
+// https://canvasjs.com/data/gallery/jquery/daily-sales-data.json
+// XLabel: date
+// YLabel: units
+
 const Home = () => {
-  const [url, setUrl] = useState('https://canvasjs.com/data/gallery/javascript/daily-sales-data.json');
+  const [url, setUrl] = useState('https://raw.githubusercontent.com/pesto-students/deep-dive-1akshat/simple-plot-react/react-exercises/simple-plot-react/src/data/data1.json');
   const [chartData, setChartData] = useState([]);
   const [chartWidth, setChartWidth] = useState(800);
   const [chartHeight, setChartHeight] = useState(500);
   const [barWidth, setBarWidth] = useState(20);
-  const [barColor, setBarColor] = useState('#8B0000');
-  const [xAxisKey, setXAxisKey] = useState('date');
-  const [yAxisKey, setYAxisKey] = useState('units');
-
+  const [barColor, setBarColor] = useState('#345c88');
+  const [xAxisKey, setXAxisKey] = useState('Letter');
+  const [yAxisKey, setYAxisKey] = useState('Freq');
+  const [strokeColor, setStrokeColor] = useState('#000000');
+  const [strokeWidth, setStrokeWidth] = useState('2px');
+  const [axisLabelColor, setAxisLabelColor] = useState('#000000');
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(url);
-      setChartData(response.data);
-    }
-    fetchData();
+    fetchData(url);
   }, []);
 
+  const fetchData = (url) => {
+    setUrl(url);
+    axios.get(url)
+      .then(response => {
+        setChartData(response.data);
+      })
+      .catch(error => {
+        throw ('Enter a valid url');
+      })
+
+  }
 
   return (
     <>
@@ -34,31 +48,63 @@ const Home = () => {
             <Form className="props-form">
               <FormGroup>
                 <Label for="data">Data Link</Label>
-                <Input type="text" name="data" placeholder="DATA URL" defaultValue={url} onChange={e => setUrl(e.target.value)} />
+                <Input type="text" name="data" placeholder="DATA URL" defaultValue={url} onChange={e => fetchData(e.target.value)} />
               </FormGroup>
               <FormGroup>
-                <Label for="chartWidth">Chart Width</Label>
-                <Input type="text" name="chartWidth" placeholder="CHART WIDTH IN PIXELS" defaultValue={chartWidth} onChange={e => setChartWidth(e.target.value)} />
+                <Row>
+                  <Col md="6">
+                    <Label for="chartWidth">Chart Width</Label>
+                    <Input type="text" name="chartWidth" placeholder="CHART WIDTH IN PIXELS" defaultValue={chartWidth} onChange={e => setChartWidth(e.target.value)} />
+                  </Col>
+                  <Col md="6">
+                    <Label for="chartHeight">Chart Height</Label>
+                    <Input type="text" name="chartHeight" placeholder="CHART HEIGHT IN PIXELS" defaultValue={chartHeight} onChange={e => setChartHeight(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
               <FormGroup>
-                <Label for="chartHeight">Chart Height</Label>
-                <Input type="text" name="chartHeight" placeholder="CHART HEIGHT IN PIXELS" defaultValue={chartHeight} onChange={e => setChartHeight(e.target.value)} />
+                <Row>
+                  <Col md="6">
+                    <Label for="barWidth">Bar Width</Label>
+                    <Input type="text" name="barWidth" placeholder="BAR WIDTH IN PIXELS" defaultValue={barWidth} onChange={e => setBarWidth(e.target.value)} />
+                  </Col>
+                  <Col md="6">
+                    <Label for="barColor">Bar Color</Label>
+                    <Input type="color" name="barColor" placeholder="Bar Color" defaultValue={barColor} onChange={e => setBarColor(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
               <FormGroup>
-                <Label for="barWidth">Bar Width</Label>
-                <Input type="text" name="barWidth" placeholder="BAR WIDTH IN PIXELS" defaultValue={barWidth} onChange={e => setBarWidth(e.target.value)} />
+                <Row>
+                  <Col md="6">
+                    <Label for="xAxis">X Axis Key</Label>
+                    <Input type="text" name="xAxis" placeholder="X Axis Key" defaultValue={xAxisKey} onChange={e => setXAxisKey(e.target.value)} />
+                  </Col>
+                  <Col md="6">
+                    <Label for="YAxis">Y Axis Key</Label>
+                    <Input type="text" name="YAxis" placeholder="Y Axis Key" defaultValue={yAxisKey} onChange={e => setYAxisKey(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
               <FormGroup>
-                <Label for="barColor">Bar Color</Label>
-                <Input type="color" name="barColor" placeholder="Bar Color" defaultValue={barColor} onChange={e => setBarColor(e.target.value)} />
+                <Row>
+                  <Col md="6">
+                    <Label for="strokeColor">Stroke Color</Label>
+                    <Input type="color" name="strokeColor" placeholder="Stroke Color" defaultValue={strokeColor} onChange={e => setStrokeColor(e.target.value)} />
+                  </Col>
+                  <Col md="6">
+                    <Label for="strokeWidth">Stroke Width</Label>
+                    <Input type="text" name="strokeWidth" placeholder="Stroke Width" defaultValue={strokeWidth} onChange={e => setStrokeWidth(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
               <FormGroup>
-                <Label for="xAxis">X Axis Key</Label>
-                <Input type="text" name="xAxis" placeholder="X Axis Key" defaultValue={xAxisKey} onChange={e => setXAxisKey(e.target.value)} />
-              </FormGroup>
-              <FormGroup>
-                <Label for="YAxis">Y Axis Key</Label>
-                <Input type="text" name="YAxis" placeholder="Y Axis Key" defaultValue={yAxisKey} onChange={e => setYAxisKey(e.target.value)} />
+                <Row>
+                  <Col md="6">
+                    <Label for="axisLabelColor">Axis Label Color</Label>
+                    <Input type="color" name="axisLabelColor" placeholder="Stroke Color" defaultValue={axisLabelColor} onChange={e => setAxisLabelColor(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
             </Form>
           </div>
@@ -72,6 +118,9 @@ const Home = () => {
             barColor={barColor}
             labelKey={xAxisKey}
             valueKey={yAxisKey}
+            strokeColor={strokeColor}
+            axisLabelColor={axisLabelColor}
+            strokeWidth={strokeWidth}
           />
         </Col>
 

@@ -3,15 +3,16 @@ import * as d3 from 'd3';
 
 
 class YAxis extends Component {
+
   render() {
     let style = {
-      stroke: "red",
-      strokeWidth: "2px"
+      stroke: this.props.strokeColor,
+      strokeWidth: this.props.strokeWidth
     }
 
     let textStyle = {
       fontSize: "0.8em",
-      fill: "red",
+      fill: this.props.axisLabelColor,
       textAnchor: "end"
     }
 
@@ -20,12 +21,23 @@ class YAxis extends Component {
 
     let lines = []
     ticks.forEach((tick, index) => {
-      lines.push(<line style={style} y1={tick} x1={this.props.y} y2={tick} x2={this.props.y - 4} />)
+      lines.push(<line
+        style={style}
+        y1={tick}
+        x1={this.props.y}
+        y2={tick}
+        x2={this.props.y - 4}
+        key={index} />)
     })
 
     let columnLables = []
     ticks.forEach((tick, index) => {
-      columnLables.push(<text style={textStyle} y={tick + 6} x={this.props.y - 6} font-family="serif" >{this.props.labels[index]}</text>)
+      columnLables.push(<text
+        key={index}
+        style={textStyle}
+        y={tick + 6}
+        x={this.props.y - 6}
+        fontFamily="serif">{this.props.labels[index]}</text>)
     })
 
 
