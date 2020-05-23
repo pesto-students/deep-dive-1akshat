@@ -5,11 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 import axios from 'axios';
 
-// Sample Data
-// https://canvasjs.com/data/gallery/jquery/daily-sales-data.json
-// XLabel: date
-// YLabel: units
-
 const Home = () => {
   const [url, setUrl] = useState('https://raw.githubusercontent.com/pesto-students/deep-dive-1akshat/simple-plot-react/react-exercises/simple-plot-react/src/data/data1.json');
   const [chartData, setChartData] = useState([]);

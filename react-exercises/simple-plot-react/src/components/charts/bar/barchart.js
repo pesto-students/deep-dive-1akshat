@@ -8,10 +8,6 @@ class BarChart extends React.Component {
 
   render() {
     const data = this.props.data;
-    // if (Array.isArray(data) && data.length === 0) {
-    //   throw Error('No Data Found')
-    // }
-    const margin = { top: 20, right: 20, bottom: 30, left: 45 };
     const width = this.props.width - margin.left - margin.right;
     const height = this.props.height - margin.top - margin.bottom;
     const labelKey = this.props.labelKey;
