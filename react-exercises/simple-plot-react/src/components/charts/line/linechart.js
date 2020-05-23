@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
+import * as d3 from 'd3';
 
-
-const defaultProperties = {
-  width: 500,
-  height: 500,
-  data: null,
-  xLabel: null,
-  yLabel: null,
-  legend: true,
-  margin: {
-    top: 0, left: 0, bottom: 0, right: 0
+class LineChart extends Component {
+  constructor(props) {
+    super(props);
+    this.props = props;
   }
-}
 
-
-const LineChart = (props) => {
-  const chartProps = {
-    ...defaultProperties
+  componentDidUpdate() {
+    const data = this.props.data.map(el => el.value);
+    const labels = this.props.data.map(el => el.label);
+    this.drawLineChart(data, labels);
   }
-  return (
-    <>
-      <p>I am line component.</p>
-      {console.log(chartProps)}
-    </>
-  )
+
+  drawLineChart(data, labels) {
+    const canvasHeight = this.props.height;
+    const canvasWidth = this.props.width;
+    const scale = this.props.scale;
+    const svgCanvas = d3.select(this.refs.canvasline)
+  }
+
+  render() {
+    return (
+      <>
+        <h1>LINE CHART</h1>
+        <div className="canvasline"></div>
+      </>
+    )
+  }
 
 }
 
