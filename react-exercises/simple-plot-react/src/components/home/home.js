@@ -29,7 +29,7 @@ const Home = () => {
         setChartData(response.data);
       })
       .catch(error => {
-        throw Error('Enter a valid url');
+        console.log('Enter a valid url');
       })
 
   }
@@ -44,6 +44,18 @@ const Home = () => {
               <FormGroup>
                 <Label for="data">Data Link</Label>
                 <Input type="text" name="data" placeholder="DATA URL" defaultValue={url} onChange={e => fetchData(e.target.value)} />
+              </FormGroup>
+              <FormGroup>
+                <Row>
+                  <Col md="6">
+                    <Label for="xAxis">X Axis Key</Label>
+                    <Input type="text" name="xAxis" placeholder="X Axis Key" defaultValue={xAxisKey} onChange={e => setXAxisKey(e.target.value)} />
+                  </Col>
+                  <Col md="6">
+                    <Label for="YAxis">Y Axis Key</Label>
+                    <Input type="text" name="YAxis" placeholder="Y Axis Key" defaultValue={yAxisKey} onChange={e => setYAxisKey(e.target.value)} />
+                  </Col>
+                </Row>
               </FormGroup>
               <FormGroup>
                 <Row>
@@ -66,18 +78,6 @@ const Home = () => {
                   <Col md="6">
                     <Label for="barColor">Bar Color</Label>
                     <Input type="color" name="barColor" placeholder="Bar Color" defaultValue={barColor} onChange={e => setBarColor(e.target.value)} />
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup>
-                <Row>
-                  <Col md="6">
-                    <Label for="xAxis">X Axis Key</Label>
-                    <Input type="text" name="xAxis" placeholder="X Axis Key" defaultValue={xAxisKey} onChange={e => setXAxisKey(e.target.value)} />
-                  </Col>
-                  <Col md="6">
-                    <Label for="YAxis">Y Axis Key</Label>
-                    <Input type="text" name="YAxis" placeholder="Y Axis Key" defaultValue={yAxisKey} onChange={e => setYAxisKey(e.target.value)} />
                   </Col>
                 </Row>
               </FormGroup>
