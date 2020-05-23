@@ -8,7 +8,6 @@ class BarChart extends React.Component {
 
   render() {
     const data = this.props.data;
-    console.log(data);
     // if (Array.isArray(data) && data.length === 0) {
     //   throw Error('No Data Found')
     // }
@@ -39,14 +38,15 @@ class BarChart extends React.Component {
     let bottom = 450
 
     data.forEach((bar, index) => {
-      bars.push(<Bar
-        key={index}
-        x={x(bar[labelKey])}
-        y={bottom - 6 - (height - y(bar[valueKey]))}
-        width={barWidth}
-        height={height - y(bar[valueKey])}
-        style={{ fill: barColor }}
-      />
+      bars.push(
+        <Bar
+          key={index}
+          x={x(bar[labelKey])}
+          y={bottom - 6 - (height - y(bar[valueKey]))}
+          width={barWidth}
+          height={height - y(bar[valueKey])}
+          style={{ fill: barColor }}
+        />
       )
     })
 

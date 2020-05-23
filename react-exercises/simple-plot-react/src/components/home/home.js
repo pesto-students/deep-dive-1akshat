@@ -34,7 +34,7 @@ const Home = () => {
         setChartData(response.data);
       })
       .catch(error => {
-        throw ('Enter a valid url');
+        throw Error('Enter a valid url');
       })
 
   }
