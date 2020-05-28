@@ -16,18 +16,24 @@ class MongoCoat {
         }
         if (url.indexOf('mongodb://') > -1) {
             // url example: 'mongodb://localhost:27017/myproject'
-            return await MongoClient.connect(url, { useUnifiedTopology: true }, (err, db) => {
-                if (err) {
-                    throw err;
-                } else {
-                    const databaseObject = db.db(databaseName);
-                    console.log(`successfully connected to the database: ${databaseName}`);
-                    return databaseObject;
-                }
-            })
+            const client = await MongoClient.connect(url, { useUnifiedTopology: true });
+            if (!client) {
+                return
+            }
+            try {
+                const databaseObject = client.db(databaseName);
+                console.log(`successfully connected to the database: ${databaseName}`);
+                return databaseObject;
+            } catch (err) {
+                throw err;
+            }
         } else {
             throw Error('Unrecognized DB connection url.');
         }
+    }
+
+    createCollection = (collectionName) => {
+
     }
 }
 
