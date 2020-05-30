@@ -1,12 +1,17 @@
 // This app will consume the lib/Api.js
-const MongoCoat = require('./lib/api');
+const { MongoCoat } = require('./mongo-coat/lib/client');
 
-const mongocoat = new MongoCoat();
-
+let DB = null;
 // This is returned as a promise
-const dbObject = mongocoat.connect('mongodb://localhost:27017/', { dbName: 'video' });
+const client = MongoCoat.connect('mongodb://localhost:27017/video');
 
-dbObject
-    .then(db => {
-        db.createCollection('roan');
-    })
+client.then(client => {
+    DB = client;
+    client.createCollection('akki');
+    // client.insertOne('akki', { _id: 1, name: 'Akshat' });
+});
+
+
+
+
+// mongocoat.createCollection('akshat');
