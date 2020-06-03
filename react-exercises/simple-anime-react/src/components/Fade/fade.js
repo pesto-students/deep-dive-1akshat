@@ -1,9 +1,19 @@
 import React from 'react';
+import './style.css';
 
-const Fade = () => {
+const Fade = (props) => {
+    const delay = props.duration !== undefined ? props.delay : 1000;
+    const duration = props.duration !== undefined ? props.duration : 3000;
+    const method = props.method ? props.method : 'fadeIn';
+
     return (
         <>
-            <p>Fade Component</p>
+        <div style={{
+            animation: `${method} ease ${duration}ms`,
+            animationDelay: `${delay}ms`
+        }}>
+            {props.children}
+        </div>
         </>
     )
 }

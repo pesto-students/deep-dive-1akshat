@@ -1,5 +1,24 @@
-.block {
+.block-red {
   width: 100px;
   height: 100px;
   background: red;
+  margin: 20px;
+}
+
+.block-grey {
+  width: 100px;
+  height: 100px;
+  background: grey;
+  margin: 20px;
+}
+
+.block-cadetblue {
+  width: 100px;
+  height: 100px;
+  background: cadetblue;
+  margin: 20px;
+}
+
+.parent {
+  display: inline-block;
 }

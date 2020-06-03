@@ -1,9 +1,18 @@
 import React from 'react';
+import './style.css';
 
-const Pulse = () => {
+const Pulse = (props) => {
+    const delay = props.duration !== undefined ? props.delay : 1000;
+    const duration = props.duration !== undefined ? props.duration : 3000;
+
     return (
         <>
-            <p>Pulse Component</p>
+        <div style={{
+            animation: `pulse ${duration}ms infinite`,
+            animationDelay: `${delay}ms`
+        }}>
+            {props.children}
+        </div>
         </>
     )
 }
