@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
+import Bounce from './components/Bounce/bounce';
 
-function App() {
+const App = () => {
   return (
     <>
       <p>This will be consuming component.</p>
