@@ -6,6 +6,9 @@ const App = () => {
   return (
     <>
       <p>This will be consuming component.</p>
+      <Bounce>
+        <button>I will Bounce</button>
+      </Bounce>
     </>
   );
 }
