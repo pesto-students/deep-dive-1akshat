@@ -31,7 +31,6 @@ const Bounce = (props) => {
         <div>
           {
             props.children.map((child, key) => {
-              console.log(key)
               childAnimationDelay += damping * key;
               return (
                 <div className="bounce" key={key} style={{
