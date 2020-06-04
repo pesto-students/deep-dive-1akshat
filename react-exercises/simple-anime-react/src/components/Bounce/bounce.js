@@ -11,8 +11,6 @@ const Bounce = (props) => {
   const cascade = props.cascade !== undefined ? stringToBoolean(props.cascade) : false;
   const damping = props.damping !== undefined ? Number(props.damping) : 1;
 
-  console.log(cascade === true, damping === 1);
-
   if (cascade === false && damping === 1) {
     throw new Error('Damping needs cascade property to be true.')
   }
