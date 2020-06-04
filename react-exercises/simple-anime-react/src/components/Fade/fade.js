@@ -8,14 +8,14 @@ const Fade = (props) => {
 
     return (
         <>
-        <div style={{
-            animation: `${method} ease ${duration}ms`,
-            animationDelay: `${delay}ms`
-        }}>
-            {props.children}
-        </div>
+            <div style={{
+                animation: `${method} ease ${duration}ms`,
+                animationDelay: `${delay}ms`
+            }}>
+                {props.children}
+            </div>
         </>
     )
 }
 
-export default Fade;
+export { Fade };

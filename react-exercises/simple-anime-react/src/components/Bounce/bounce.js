@@ -17,4 +17,4 @@ const Bounce = (props) => {
   )
 }
 
-export default Bounce;
+export { Bounce };
