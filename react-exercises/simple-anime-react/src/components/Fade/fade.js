@@ -9,7 +9,7 @@ const Fade = (props) => {
     return (
         <>
             <div style={{
-                animation: `${method} ease ${duration}ms`,
+                animation: `${method} ease ${duration}ms Infinite`,
                 animationDelay: `${delay}ms`
             }}>
                 {props.children}

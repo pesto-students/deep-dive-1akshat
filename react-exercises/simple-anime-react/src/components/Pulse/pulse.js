@@ -8,7 +8,7 @@ const Pulse = (props) => {
   return (
     <>
       <div style={{
-        animation: `pulse ${duration}ms infinite`,
+        animation: `pulse ${duration}ms Infinite`,
         animationDelay: `${delay}ms`
       }}>
         {props.children}

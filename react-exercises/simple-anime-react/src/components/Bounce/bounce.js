@@ -11,7 +11,7 @@ const Bounce = (props) => {
     <>
       {cascade === false ?
         <div className="bounce" style={{
-          animation: `bounce ${duration}ms`,
+          animation: `bounce ${duration}ms Infinite`,
           animationDelay: `${delay}ms`
         }}>
           {props.children}
@@ -24,7 +24,7 @@ const Bounce = (props) => {
               childAnimationDelay += 2000;
               return (
                 <div className="bounce" key={key} style={{
-                  animation: `bounce ${duration + childAnimationDelay}ms`,
+                  animation: `bounce ${duration + childAnimationDelay}ms Infinite`,
                   animationDelay: `${delay}ms`
                 }}>
                   {child}
