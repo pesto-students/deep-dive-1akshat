@@ -5,22 +5,42 @@ import { Bounce, Fade, Pulse } from './components/index';
 const App = () => {
   return (
     <>
-      <p>This will be consuming component.</p>
-      <Bounce duration="5000" delay="1000" >
-        <div className="block-red">Bounce</div>
+      <Bounce duration="10000" delay="1000">
+        <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
       </Bounce>
+      <div className="container">
+        <div className="wrap">
+          <Bounce duration="5000" delay="500" cascade="true">
+            <div className="block-red">
+              <p>Bounce</p>
+            </div>
+            <div className="block-red">
+              <p>Bounce</p>
+            </div>
+            <div className="block-red">
+              <p>Bounce</p>
+            </div>
+          </Bounce>
 
-      <Fade duration="5000" delay="1000" method="fadeIn">
-        <div className="block-grey">Fade In</div>
-      </Fade>
+          <Fade duration="5000" delay="1000" method="fadeIn">
+            <div className="block-grey">
+              <p>Fade In</p>
+            </div>
+          </Fade>
 
-      <Fade duration="5000" delay="1000" method="fadeOut">
-        <div className="block-cadetblue">Fade Out</div>
-      </Fade>
+          <Fade duration="5000" delay="1000" method="fadeOut">
+            <div className="block-grey">
+              <p>Fade Out</p>
+            </div>
+          </Fade>
 
-      <Pulse duration="5000" delay="1000" className="parent">
-        <div className="block-cadetblue">Pulse</div>
-      </Pulse>
+          <Pulse duration="5000" delay="1000" className="parent">
+            <div className="block-cadetblue">
+              <p>Pulse</p>
+            </div>
+          </Pulse>
+        </div>
+      </div>
     </>
   );
 }
