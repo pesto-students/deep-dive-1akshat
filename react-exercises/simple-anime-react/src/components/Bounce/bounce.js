@@ -10,6 +10,7 @@ const Bounce = (props) => {
   const duration = props.duration !== undefined ? Number(props.duration) : 3000;
   const cascade = props.cascade !== undefined ? stringToBoolean(props.cascade) : false;
   const damping = props.damping !== undefined ? Number(props.damping) : 1;
+  const style = props.style !== undefined ? props.style : {};
 
   if (cascade === false && damping === 1) {
     throw new Error('Damping needs cascade property to be true.')
@@ -30,7 +31,8 @@ const Bounce = (props) => {
         <div>
           {
             props.children.map((child, key) => {
-              childAnimationDelay += damping * 1;
+              console.log(key)
+              childAnimationDelay += damping * key;
               return (
                 <div className="bounce" key={key} style={{
                   animation: `bounce ${duration}ms Infinite`,
