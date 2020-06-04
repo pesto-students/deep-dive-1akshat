@@ -1,10 +1,22 @@
 import React from 'react';
 import './style.css';
 
+const stringToBoolean = (string) => {
+  return string === 'true';
+}
+
 const Bounce = (props) => {
   const delay = props.duration !== undefined ? Number(props.delay) : 1000;
   const duration = props.duration !== undefined ? Number(props.duration) : 3000;
-  const cascade = props.cascade !== undefined ? props.cascade : false;
+  const cascade = props.cascade !== undefined ? stringToBoolean(props.cascade) : false;
+  const damping = props.damping !== undefined ? Number(props.damping) : 1;
+
+  console.log(cascade === true, damping === 1);
+
+  if (cascade === false && damping === 1) {
+    throw new Error('Damping needs cascade property to be true.')
+  }
+
   let childAnimationDelay = 0;
 
   return (
@@ -20,12 +32,12 @@ const Bounce = (props) => {
         <div>
           {
             props.children.map((child, key) => {
-              // 2000 is hardcoded for now
-              childAnimationDelay += 2000;
+              childAnimationDelay += damping * 1;
               return (
                 <div className="bounce" key={key} style={{
-                  animation: `bounce ${duration + childAnimationDelay}ms Infinite`,
-                  animationDelay: `${delay}ms`
+                  animation: `bounce ${duration}ms Infinite`,
+                  animationDelay: `${(delay * childAnimationDelay) + childAnimationDelay
+                    }ms`
                 }}>
                   {child}
                 </div>

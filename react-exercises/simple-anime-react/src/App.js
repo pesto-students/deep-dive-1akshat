@@ -5,12 +5,10 @@ import { Bounce, Fade, Pulse } from './components/index';
 const App = () => {
   return (
     <>
-      <Bounce duration="10000" delay="1000">
-        <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
-      </Bounce>
+      <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
       <div className="container">
         <div className="wrap">
-          <Bounce duration="5000" delay="500" cascade="true">
+          <Bounce duration="5000" delay="500" cascade="true" damping="1.5">
             <div className="block-red">
               <p>Bounce</p>
             </div>
