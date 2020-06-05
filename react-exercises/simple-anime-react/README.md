@@ -20,10 +20,12 @@ You can make your own API names. You can use either CSS to animate, or JavaScrip
 - You can use any lib for easing effects. 
 - No other library
 
-# Props to support
+# Supported Props
 
-* ```delay*```: Time to wait before the animation starts(in milliseconds).
-* ```duration*```: The animation duration (milliseconds).	
-* ```triggerOnce*```: Specifies if the animation should run only once or everytime an element enters/exits/re-enters the viewport.	
-* ```style*```: Object to add inline styles to the wrapper element.
-* ```cascade```: If set, each child of a reveal animation automatically get assigned a delay that takes into account their predecessor (child `i` enters the viewport after i  ```delay * damping``` milliseconds) – useful for animating list items.	
+* ```delay```: Time to wait before the animation starts(in milliseconds).
+* ```duration```: The animation duration (milliseconds).	
+* ```animationIterationCount```: Specifies number of times animation should be played.	
+* ```style```: Object to add inline styles to the wrapper element.
+* ```className```: Class names to add to the wrapper element.
+* ```cascade```: If set, each child of a reveal animation automatically get assigned a delay that takes into account their predecessor (child `i` enters the viewport after i  ```delay * damping``` milliseconds) – useful for animating list items.
+* ```damping```: Factor that affects the delay that each animated component in a cascade animation will be assigned. If ```damping = 1``` then the delay will be equal to the animation duration; if ```damping < 1``` then the delay will be lower than the animation duration; if ```damping > 1``` then the delay will be greater than the animation duration.	

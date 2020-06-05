@@ -6,11 +6,13 @@ const Bounce = (props) => {
   const duration = props.duration ? Number(props.duration) : 3000;
   const cascade = props.cascade ? props.cascade : false;
   const damping = props.damping ? Number(props.damping) : 0;
+  const animationIterationCount = props.animationIterationCount ? props.animationIterationCount : 1;
   const customStyle = props.style ? props.style : {};
   let childAnimationDelay = 0;
   const noCascadeStyle = {
     animation: `bounce ${duration}ms Infinite`,
-    animationDelay: `${delay}ms`
+    animationDelay: `${delay}ms`,
+    animationIterationCount: `${animationIterationCount}`
   }
   const children = Array.isArray(props.children) ? props.children : React.Children.toArray(props.children);
 
@@ -28,7 +30,8 @@ const Bounce = (props) => {
               const cascadeStyle = {
                 animation: `bounce ${duration}ms Infinite`,
                 animationDelay: `${(delay * childAnimationDelay) + childAnimationDelay
-                  }ms`
+                  }ms`,
+                animationIterationCount: `${animationIterationCount}`
               }
               return (
                 <div className="bounce" key={key} style={{ ...customStyle, ...cascadeStyle }}>

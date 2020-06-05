@@ -8,7 +8,7 @@ const App = () => {
       <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
       <div className="container">
         <div className="wrap">
-          <Bounce duration="5000" delay="500" cascade={false} damping="1" >
+          <Bounce duration="5000" delay="500" cascade={false} damping="1" animationIterationCount="5">
             <div className="block-red">
               <p>Bounce</p>
             </div>
