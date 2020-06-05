@@ -7,17 +7,12 @@ const Bounce = (props) => {
   const cascade = props.cascade ? props.cascade : false;
   const damping = props.damping ? Number(props.damping) : 0;
   const customStyle = props.style ? props.style : {};
-
-  if (!cascade && damping === 1) {
-    throw new Error('Damping needs cascade property to be true.')
-  }
-
   let childAnimationDelay = 0;
-
   const noCascadeStyle = {
     animation: `bounce ${duration}ms Infinite`,
     animationDelay: `${delay}ms`
   }
+  const children = Array.isArray(props.children) ? props.children : React.Children.toArray(props.children);
 
   return (
     <>
@@ -28,7 +23,7 @@ const Bounce = (props) => {
         :
         <div>
           {
-            props.children.map((child, key) => {
+            children.map((child, key) => {
               childAnimationDelay += damping;
               const cascadeStyle = {
                 animation: `bounce ${duration}ms Infinite`,

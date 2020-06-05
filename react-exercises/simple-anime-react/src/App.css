@@ -36,6 +36,15 @@ p {
   position: relative;
 }
 
+.block-orange {
+  margin-top: 40px;
+  width: 100px;
+  height: 100px;
+  background: rgb(156, 128, 2);
+  margin-left: 20px;
+  position: relative;
+}
+
 .block-cadetblue {
   margin-top: 40px;
   width: 100px;
