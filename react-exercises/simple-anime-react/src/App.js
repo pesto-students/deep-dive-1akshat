@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Bounce, Fade, Pulse } from './components/index';
+import { Bounce, Fade, Pulse, Slide } from './components/index';
 
 
 const App = () => {
@@ -56,6 +56,12 @@ const App = () => {
               <p>Pulse</p>
             </div>
           </Pulse>
+
+          <Slide duration="5000" delay="1000" className="parent" method="up">
+            <div className="block-blue">
+              <p>Slide up</p>
+            </div>
+          </Slide>
         </div>
       </div>
     </>
