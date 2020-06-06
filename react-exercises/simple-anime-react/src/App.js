@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Bounce, Fade, Pulse, Slide } from './components/index';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = () => {
+
+  // const [bounce, setBounce] = useState(false);
+  // const [slide, setSlide] = useState(false);
+  // const [fadeIn, setFadeIn] = useState(false);
+  // const [fadeOut, setFadeOut] = useState(false);
+  // const [pulse, setPulse] = useState(false);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen(prevState => !prevState);
+
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
+
       <div className="container">
         <div className="wrap">
           <Bounce duration="5000" delay="500" animationIterationCount="Infinite">
@@ -14,7 +27,7 @@ const App = () => {
             </div>
           </Bounce>
 
-          <Fade duration="2000" delay="500" cascade={true} damping="1.5" method="fadeIn" className="animate">
+          < Fade duration="2000" delay="500" cascade={true} damping="1.5" method="fadeIn" className="animate">
             <div className="block-grey">
               <p>Fade In</p>
             </div>

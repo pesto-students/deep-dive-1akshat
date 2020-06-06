@@ -9,7 +9,7 @@
 
 import effects from the library to your React Component, for example the ```Bounce``` effect:
 
-```import { Bounce } from './components/index';```
+```import { Bounce } from './lib';```
 
 Then simply wrap the components you want to animate:
 
@@ -32,8 +32,8 @@ You can pass the following properties to the animation components to customize t
 | delay    | Time to wait before the animation starts(in milliseconds). | ```number``` value | ```0```
 | duration      | The animation duration (milliseconds).	      |  ```number``` value | ```1000```
 | animationIterationCount | Number of times animation should be played.      |    ```number``` value | ```Infinity```  |
-| style | Object to add inline styles to the wrapper element.      |    ```string``` value | ```""```  |
-| className | Class names to add to the wrapper element.	      |    ```object``` value | ```{}```  |
+| style | Object to add inline styles to the wrapper element.      |    ```object``` value | ```{}```  |
+| className | Class names to add to the wrapper element.	      |    ```string``` value | ```""```  |
 | cascade | If set, each child of a reveal animation automatically get assigned a delay that takes into account their predecessor child -  useful for animating list items.	      |    ```true``` or ```false``` | ```false```  | 
 | damping | Factor that affects the delay that each animated component in a cascade animation will be assigned.	      |    ```number``` value | ```0.5``` (meaning that the delay will be half of the animation duration)  | 
 
