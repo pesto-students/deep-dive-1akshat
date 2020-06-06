@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
-import { Bounce, Fade, Pulse } from './components/index';
+import { Bounce, Fade, Pulse, Slide } from './components/index';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'reactstrap';
-
 
 
 const App = () => {
@@ -13,12 +12,10 @@ const App = () => {
 
       <div className="row">
         <div className="col-md-3">
-
           <Bounce animationIterationCount='Infinite'>
             <img style={{ height: '300px' }} src="https://lh3.googleusercontent.com/proxy/XcRijctCnv9piNAXFEmqcpAmXi0XFDR6ONXIDmG8oNC9DUGzmQP1vVg_rISrBR8uFm0OtTMbadoctWY1xPEeH32wzrkuvUzhZlTOKAhY-OhTdj22_X3KKCwzkmmPxLGHSscxLZdg" alt="ball" />
           </Bounce>
         </div>
-
 
         <div className="col-md-3" style={{ marginTop: "5%" }} >
           <Fade cascade={true} delay="500" duration="2000">
@@ -51,6 +48,14 @@ const App = () => {
           <Pulse duration="400" delay="300" className="parent">
             <img src="https://icons.iconarchive.com/icons/iconsmind/outline/512/Sound-Wave-icon.png" alt="sound wave" style={{ width: '400px' }} />
           </Pulse>
+        </div>
+
+        <div className="col-md-3" style={{ marginTop: "5%" }} animationIterationCount='Infinite'>
+          <Slide duration="5000" delay="1000" className="parent" method="up">
+            <div className="block-blue">
+              <p>Slide up</p>
+            </div>
+          </Slide>
         </div>
       </div>
     </>

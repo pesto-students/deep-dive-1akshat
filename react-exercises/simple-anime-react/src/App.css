@@ -45,6 +45,16 @@ p {
   position: relative;
 }
 
+.block-blue {
+  margin-top: 40px;
+  width: 100px;
+  height: 300px;
+  background: #4768e1;
+  margin-left: 20px;
+  position: relative;
+  border: 1px solid #4768e1;
+}
+
 .block-cadetblue {
   margin-top: 40px;
   width: 100px;
