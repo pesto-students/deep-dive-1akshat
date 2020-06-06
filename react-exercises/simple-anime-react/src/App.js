@@ -33,7 +33,7 @@ const App = () => {
             </div>
           </Fade>
 
-          <Fade duration="5000" delay="1000" cascade={false} damping="2.5" method="fadeOut">
+          <Fade duration="2000" delay="1000" cascade={true} damping="2.5" method="fadeOut">
             <div className="block-orange">
               <p>Fade Out</p>
             </div>
@@ -45,7 +45,7 @@ const App = () => {
             </div>
           </Fade>
 
-          <Pulse duration="5000" delay="1000" className="parent" cascade={true} damping="2.5">
+          <Pulse duration="2000" delay="1000" className="parent" cascade={true} damping="2.5">
             <div className="block-cadetblue">
               <p>Pulse</p>
             </div>

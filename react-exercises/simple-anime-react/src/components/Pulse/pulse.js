@@ -6,9 +6,9 @@ const Pulse = (props) => {
   const duration = props.duration ? Number(props.duration) : 3000;
   const cascade = props.cascade ? props.cascade : false;
   const damping = props.damping ? Number(props.damping) : 0;
+  const animationIterationCount = props.animationIterationCount ? props.animationIterationCount : '1';
   const userClass = props.className;
   const propStyle = props.style ? props.style : {};
-  let childAnimationDelay = 0;
   let animationStyle = {
     animation: `pulse ${duration}ms Infinite`,
     animationDelay: `${delay}ms`
@@ -25,10 +25,10 @@ const Pulse = (props) => {
         <div>
           {
             children.map((child, key) => {
-              childAnimationDelay += damping;
               animationStyle = {
                 animation: `pulse ${duration}ms Infinite`,
-                animationDelay: `${(delay * childAnimationDelay) + childAnimationDelay}ms`
+                animationDelay: `${key * duration * damping}ms`,
+                animationIterationCount: `${animationIterationCount}`
               }
               return (
                 <div key={key} style={{ ...propStyle, ...animationStyle }} className={`${userClass}`}>

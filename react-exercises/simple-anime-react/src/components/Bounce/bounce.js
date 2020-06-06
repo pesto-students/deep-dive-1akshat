@@ -27,8 +27,7 @@ const Bounce = (props) => {
             children.map((child, key) => {
               const cascadeStyle = {
                 animation: `bounce ${duration}ms`,
-                animationDelay: `${(key * damping * duration)
-                  }ms`,
+                animationDelay: `${(key * damping * duration)}ms`,
                 animationIterationCount: `${animationIterationCount}`
               }
               return (
