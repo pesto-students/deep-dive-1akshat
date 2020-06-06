@@ -13,7 +13,7 @@
 .block-red {
   margin-top: 40px;
   width: 100px;
-  height: 100px;
+  height: 380px;
   background: rgba(182, 5, 5, 0.712);
   position: relative;
 }
@@ -58,7 +58,7 @@ p {
 .block-cadetblue {
   margin-top: 40px;
   width: 100px;
-  height: 100px;
+  height: 380px;
   background: cadetblue;
   margin-left: 20px;
   position: relative;
