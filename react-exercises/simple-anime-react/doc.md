@@ -31,7 +31,7 @@ You can pass the following properties to the animation components to customize t
 | -------------   |:-------------:        | -----:  | ------: | 
 | delay    | Time to wait before the animation starts(in milliseconds). | ```number``` value | ```0```
 | duration      | The animation duration (milliseconds).	      |  ```number``` value | ```1000```
-| animationIterationCount | Number of times animation should be played.      |    ```number``` value | ```Infinity```  |
+| animationIterationCount | Number of times animation should be played.      |    ```number``` value | ```1```  |
 | style | Object to add inline styles to the wrapper element.      |    ```string``` value | ```""```  |
 | className | Class names to add to the wrapper element.	      |    ```object``` value | ```{}```  |
 | cascade | If set, each child of a reveal animation automatically get assigned a delay that takes into account their predecessor child -  useful for animating list items.	      |    ```true``` or ```false``` | ```false```  | 
