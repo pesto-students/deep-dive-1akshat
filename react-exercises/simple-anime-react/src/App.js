@@ -2,13 +2,14 @@ import React from 'react';
 import './App.css';
 import { Bounce, Fade, Pulse } from './components/index';
 
+
 const App = () => {
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Simple Anime Library</h1>
       <div className="container">
         <div className="wrap">
-          <Bounce duration="5000" delay="500" cascade={false} damping="1">
+          <Bounce duration="1000" delay="500" cascade={true} damping={2} animationIterationCount={1}>
             <div className="block-red">
               <p>Bounce</p>
             </div>
@@ -20,7 +21,7 @@ const App = () => {
             </div>
           </Bounce>
 
-          <Fade duration="5000" delay="1000" cascade={false} damping="1" method="fadeIn" className="animate">
+          <Fade duration="3000" delay="500" cascade={true} damping="1" method="fadeIn" className="animate">
             <div className="block-grey">
               <p>Fade In</p>
             </div>

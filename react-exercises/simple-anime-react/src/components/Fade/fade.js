@@ -8,11 +8,11 @@ const Fade = (props) => {
   const method = props.method ? props.method : 'fadeIn';
   const cascade = props.cascade ? props.cascade : false;
   const damping = props.damping ? Number(props.damping) : 0;
+  const animationIterationCount = props.animationIterationCount ? props.animationIterationCount : '1';
   const userClass = props.className;
   const propStyle = props.style ? props.style : {};
-  let childAnimationDelay = 0;
   let animationStyle = {
-    animation: `${method} ease ${duration}ms Infinite`,
+    animation: `${method} ease ${duration}ms`,
     animationDelay: `${(delay)}ms`
   }
   const children = Array.isArray(props.children) ? props.children : React.Children.toArray(props.children);
@@ -27,10 +27,10 @@ const Fade = (props) => {
         <div>
           {
             children.map((child, key) => {
-              childAnimationDelay += damping;
               animationStyle = {
-                animation: `${method} ease ${duration}ms Infinite`,
-                animationDelay: `${(delay * childAnimationDelay) + childAnimationDelay}ms`
+                animation: `${method} ease ${duration}ms`,
+                animationDelay: `${(key * duration * damping)}ms`,
+                animationIterationCount: `${animationIterationCount}`
               }
               return (
                 <div key={key} style={{ ...propStyle, ...animationStyle }} className={`${userClass}`}>

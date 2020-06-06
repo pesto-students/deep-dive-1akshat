@@ -9,7 +9,7 @@ const Bounce = (props) => {
   const animationIterationCount = props.animationIterationCount ? props.animationIterationCount : '1';
   const customStyle = props.style ? props.style : {};
   const noCascadeStyle = {
-    animation: `bounce ${duration}ms Infinite`,
+    animation: `bounce ${duration}ms`,
     animationDelay: `${delay}ms`,
     animationIterationCount: `${animationIterationCount}`
   }
@@ -26,7 +26,7 @@ const Bounce = (props) => {
           {
             children.map((child, key) => {
               const cascadeStyle = {
-                animation: `bounce ${duration}ms Infinite`,
+                animation: `bounce ${duration}ms`,
                 animationDelay: `${(key * damping * duration)
                   }ms`,
                 animationIterationCount: `${animationIterationCount}`
